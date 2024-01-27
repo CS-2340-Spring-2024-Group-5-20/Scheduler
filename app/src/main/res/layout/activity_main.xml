@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="840dp">
 
     </FrameLayout>
 
@@ -34,46 +34,17 @@
         android:layout_gravity="bottom"
         android:background="@android:color/transparent"
         app:itemHorizontalTranslationEnabled="true"
-        app:menu="@menu/bottom" />
+        app:menu="@menu/bottom">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/middle_menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_gravity="clip_horizontal|center|top"
+            android:backgroundTint="#d6cfc7"
+            android:src="@drawable/add"
+            app:maxImageSize="40dp" />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="275dp">
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:contentDescription="@string/top_rectangle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/top_background_rectangle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round_button"
-        android:onClick="d"
-        android:text="+"
-        android:visibility="visible"
-        app:iconPadding="20dp"
-        app:layout_anchor="@+id/bottom_button"
-        app:layout_anchorGravity="top|center"
-        tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

@@ -3,4 +3,8 @@
     <string name="top_rectangle">top_rectangle</string>
     <string name="reminders">Reminders</string>
     <string name="schedule">Schedule</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="reminders_text">Reminders</string>
+    <string name="schedule_text">Schedule</string>
 </resources>
