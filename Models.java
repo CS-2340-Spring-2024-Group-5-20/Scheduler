@@ -8,7 +8,7 @@ public class MeetingTime {
     String endTime;
 }
 public class CollegeClass {
-    Color[] COLOR_CONSTANTS = [red, blie, green, yellow, orange...]
+    Color[] COLOR_CONSTANTS = [red, blue, green, yellow, orange...]
     UUID id;
     String name;
     ClassObject[] classwork //arraylist
@@ -32,10 +32,10 @@ public class AcademicTasks inherits Task {
      */
     @Override;
     public int compareTo(AcacdemicTask obj) {
-        //if this.Day.ordinal > obj.Day.Ordinal return 1
+        // if this.Day.ordinal > obj.Day.Ordinal >>> return 1
         // if return is still zero, check start times
         // if return is still zero, check types
-        //if this.getClass != obj.getclass
+        // if this.getClass != obj.getclass
         //    if current class is an assignment, it takes priority
         // if they are of the same day, time, and type then organize by UUID's
         //    if current.uuid > obj.uuid
