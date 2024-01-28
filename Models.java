@@ -1,5 +1,7 @@
+import java.awt.*;
 import java.util.UUID;
 import java.util.Random;
+import java.util.ArrayList;
 public class Models {
     /**
      * An enum filled with all the days of the week, accessible by any class below which requires fixed days.
@@ -105,18 +107,43 @@ public class Models {
             this.professor = professor;
             color = COLOR_CONSTANTS[random.nextInt(6)];
         }
+
+        /**
+         * Getter for this CollegeClass object's UUID.
+         * @return UUID.
+         */
         public UUID getUUID() {
             return id;
         }
-        public String getClassName() {
+
+        /**
+         * Getter for the title of this CollegeClass object.
+         * @return title of class.
+         */
+        public String getClassTitle() {
             return classTitle;
         }
+
+        /**
+         * Getter for MeetingTime Array of this CollegeClass object.
+         * @return MeetingTime array of the days of the week and corresponding times the class meets.
+         */
         public MeetingTime[] getMeetingTimes () {
             return meetingTimes;
         }
+
+        /**
+         * Getter for the professor that teaches this class.
+         * @return name of professor that teaches this class.
+         */
         public String getProfessor() {
             return professor;
         }
+
+        /**
+         * Getter for color.
+         * @return color.
+         */
         public Color getColor() {
             return color;
         }
@@ -126,55 +153,105 @@ public class Models {
      * This class will pertain to Tasks. Each task will have it's own UUID, its own String designated for time, and a
      * string designated for a description.
      */
-    public abstract class Task {
+    public class Task {
         public UUID id;
+        public CollegeClass course;
         public String time;
         public String description;
-    }
+        public Day day;
+        public int month;
+        public int dayOfMonth;
+        public String dueDate;
+        public Color color;
 
-//    public class AcademicTasks extends Task {
-//
-//    }
-//    Unneeded (?)
-    public abstract ClassObject extends AcademicTask {
         /**
-         * will compare two objects and determine which should appear first.
-         * This will be done according to the rules outlined by how academic tasks will be displayed.
-         * Their days will be compared first, then start times, then object types. Assignments will appear first.
-         * Then if all the other things are the same, meaning possibly two classes or two assignments occur or are due
-         * at the same time, it will be sorted via UUID number.
+         * constructor to account for if this academic task doesnt relate to a specific college course.
+         * @param time the time at which this task will take place.
+         * @param description description of task
+         * @param day day of week on which this task will occur
+         * @param month the month when this task will occur (as a number)
+         * @param dayOfMonth day of the month for which this task will occur.
+         * course field is left null and the color will be random.
          */
-//        @Override;
-//        public int compareTo(AcacdemicTask obj) {
-//            // while loop to run while return integer is zero. If it changes we will have our result.
-//            // if this.Day.ordinal > obj.Day.Ordinal >>> return 1
-//            // if return is still zero, check start times
-//            // if return is still zero, check types
-//            // if this.getClass != obj.getclass (
-//            //    if current class is an assignment, it takes priority
-//            // if they are of the same day, time, and type then organize by UUID's
-//            //    if current.classid > obj.classid;
-//        }
-    }
-    /**
-     * will sort current backing data structure to organize academic tasks
-     * by which day of the week the tasks occur, then by priority and then
-     * class start/assignment due times.
-     */
-    public void classObjSorter() {
+        public Task(String time, String description, Day day, int month, int dayOfMonth) {
+            this(null, time, description, day, month, dayOfMonth);
+            this.color = COLOR_CONSTANTS[random.nextInt(6)];
+        }
 
+        /**
+         * Constructor for Task objects.
+         * @param course the course for which this task relates to.
+         * @param time the time at which this task will take place.
+         * @param description description of task
+         * @param day day of week on which this task will occur
+         * @param month the month when this task will occur (as a number)
+         * @param dayOfMonth day of the month for which this task will occur.
+         */
+        public Task(CollegeClass course, String time, String description, Day day, int month, int dayOfMonth){
+            this.id = UUID.randomUUID();
+            this.course = course;
+            this.time = time;
+            this.description = description;
+            this.day = day;
+            this.month = month;
+            this.dayOfMonth = dayOfMonth;
+            this.color = course.getColor();
+        }
     }
-    public class Exam extends ClassObject {
+
+    /**
+     *This class relates to exams. This class is an extension of the Tasks class, adding a
+     * String variable for the end time of an exam.
+     */
+    public class Exam extends Task {
+        /**
+         * time at which the exam ends, differs from the ambiguous field "time".
+         */
         public String endTime;
 
+        /**
+         * constructor for task objects.
+         * @param course the course for which this exam belongs to.
+         * @param time the start time of the exam.
+         * @param endTime the time the exam is scheduled to end.
+         * @param description miscellaneous description of the exam.
+         * @param day day of the week this exam takes place.
+         * @param month the month in which this exam will occur.
+         * @param dayOfMonth numerical day of the month this exam will occur.
+         * Big call to the super's constructor. UUID and Color assignment will occur in the same manner as outlined in the super class.
+         */
+        public Exam(CollegeClass course, String time, String endTime, String description, Day day, int month, int dayOfMonth){
+            super(course, time, description, day, month, dayOfMonth);
+            this.endTime = endTime;
+        }
     }
-    public class Assignments extends ClassObject {
-        String dueDate; //inheirted as String time
+
+    /**
+     * This class pertains to assignments, which extend the Task class.
+     * The time string from the super class is used as a time for which the assignment is due,
+     */
+    public class Assignment extends Task {
+        public String dueDate;
+        /**
+         * Constructor for Assignment objects.
+         * @param course course for which this assignment originates from.
+         * @param time time at which this assignment is due.
+         * @param description miscellaneous description of what assignment is.
+         * @param day day of week the assignment is due.
+         * @param month numerical month the assignment is due.
+         * @param dayOfMonth numerical day when the assignment is due.
+         * Big call to the super's constructor. UUID and Color assignment will occur in the same manner as outlined in the super class.
+         */
+        public Assignment (CollegeClass course, String time, String description, Day day, int month, int dayOfMonth){
+            super(course, time, description, day, month, dayOfMonth);
+            this.dueDate = String.format("%s, %s - %s", day, month, dayOfMonth);
+        }
+
     }
 
     public class ScheduleManager {
-        public CollegeClass[] classes;
-        public
+        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
+        public ArrayList<Task> academicTasks = new ArrayList<Task>();
         private compareObjects();
     }
 }
