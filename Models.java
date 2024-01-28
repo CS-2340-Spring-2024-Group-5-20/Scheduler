@@ -152,6 +152,7 @@ public class Models {
     /**
      * This class will pertain to Tasks. Each task will have it's own UUID, its own String designated for time, and a
      * string designated for a description.
+     * The integer fields for month and day of month exist for sorting purposes.
      */
     public class Task {
         public UUID id;
@@ -161,11 +162,10 @@ public class Models {
         public Day day;
         public int month;
         public int dayOfMonth;
-        public String dueDate;
         public Color color;
 
         /**
-         * constructor to account for if this academic task doesnt relate to a specific college course.
+         * constructor to account for if this academic task doesnt relate to a specific college course. (aka just a normal reminder)
          * @param time the time at which this task will take place.
          * @param description description of task
          * @param day day of week on which this task will occur
@@ -197,6 +197,30 @@ public class Models {
             this.dayOfMonth = dayOfMonth;
             this.color = course.getColor();
         }
+        public UUID getId() {
+            return id;
+        }
+        public CollegeClass getCourse() {
+            return course;
+        }
+        public String getTime() {
+            return time;
+        }
+        public String getDescription() {
+            return description;
+        }
+        public Day getDay() {
+            return day;
+        }
+        public int getMonth() {
+            return month;
+        }
+        public int getDayOfMonth() {
+            return dayOfMonth;
+        }
+        public Color getColor() {
+            return color;
+        }
     }
 
     /**
@@ -208,6 +232,19 @@ public class Models {
          * time at which the exam ends, differs from the ambiguous field "time".
          */
         public String endTime;
+
+        /**
+         * Constructor for Exam objects. This constructor accounts for a lack of a description.
+         * @param course the course for which this exam belongs to.
+         * @param time the start time of the exam.
+         * @param endTime the time the exam is scheduled to end.
+         * @param day day of the week this exam takes place.
+         * @param month the month in which this exam will occur.
+         * @param dayOfMonth numerical day of the month this exam will occur.
+         */
+        public Exam(CollegeClass course, String time, String endTime, Day day, int month, int dayOfMonth){
+            this(course, time, endTime, "No description.", day, month, dayOfMonth)
+        }
 
         /**
          * constructor for task objects.
@@ -224,6 +261,9 @@ public class Models {
             super(course, time, description, day, month, dayOfMonth);
             this.endTime = endTime;
         }
+        public String getEndTime() {
+            return endTime;
+        }
     }
 
     /**
@@ -232,6 +272,18 @@ public class Models {
      */
     public class Assignment extends Task {
         public String dueDate;
+
+        /**
+         * Constructor for Assignment objects. This constructor accounts for a lack of a description.
+         * @param course course for which this assignment originates from.
+         * @param time time at which this assignment is due.
+         * @param day day of week the assignment is due.
+         * @param month numerical month the assignment is due.
+         * @param dayOfMonth numerical day when the assignment is due.
+         */
+        public Assignment(CollegeClass course, String time, Day day, int month, int dayOfMonth){
+            this(course, time, "No description.", day, month, dayOfMonth);
+        }
         /**
          * Constructor for Assignment objects.
          * @param course course for which this assignment originates from.
@@ -246,7 +298,9 @@ public class Models {
             super(course, time, description, day, month, dayOfMonth);
             this.dueDate = String.format("%s, %s - %s", day, month, dayOfMonth);
         }
-
+        public String getDueDate() {
+            return dueDate;
+        }
     }
 
     public class ScheduleManager {
