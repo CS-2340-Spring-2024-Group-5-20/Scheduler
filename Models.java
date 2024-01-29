@@ -221,6 +221,49 @@ public class Models {
         public Color getColor() {
             return color;
         }
+
+        /**
+         * An override of java's compareTo method, compares two Task objects and returns:
+         * - a positive integer if the current object is better than the object passed into the argument.
+         * - a negative integer if the current object is less than the object passed into the argument.
+         * in the case of this scheduler app, a positive integer is return if the current object comes before the one passed into the argument.
+         * @param comp the Task object that the current object is to be compared to.
+         * @return a positive or negative integer.
+         */
+        public int compareTo(Task comp) {
+            if (month == comp.month) {
+                if (dayOfMonth == comp.dayOfMonth && day == day){ // reached if they have the same month
+                    for (int i = 0; i < 4; i++) { // reached only if they have the same month and day
+                        if (time.charAt(i) < comp.time.charAt(i)) { // checks each char at a time to see which one has an earlier time
+                            return 1;
+                            break;
+                        } else if (time.charAt(i) > comp.time.charAt(i)) {
+                            return = -1;
+                            break;
+                        }
+                    }
+                    if (flag == 0) { // reached if these two objects take place at the same time.
+                        if (id > comp.id) { //checks UUID
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                } else {
+                    if (dayOfMonth < comp.dayOfMonth) { //reached if the months are the same but the days aren't.
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            } else { // reached if the months are not the same
+                if (month < comp.month) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        }
     }
 
     /**
@@ -271,6 +314,10 @@ public class Models {
      * The time string from the super class is used as a time for which the assignment is due,
      */
     public class Assignment extends Task {
+        /**
+         * Added dueDate variable field for the purposes of display, not to be used in comparisons.
+         * All fields used to create dueDate are already being used for compareTo() in Task class.
+         */
         public String dueDate;
 
         /**
@@ -296,7 +343,7 @@ public class Models {
          */
         public Assignment (CollegeClass course, String time, String description, Day day, int month, int dayOfMonth){
             super(course, time, description, day, month, dayOfMonth);
-            this.dueDate = String.format("%s, %s - %s", day, month, dayOfMonth);
+            this.dueDate = String.format("%s, %s/%s at %s", day, month, dayOfMonth, time);
         }
         public String getDueDate() {
             return dueDate;
