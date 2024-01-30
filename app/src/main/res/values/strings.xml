@@ -8,4 +8,10 @@
     <string name="reminders_text">Reminders</string>
     <string name="schedule_text">Schedule</string>
     <string name="create_schedule_top_text">Create Schedule</string>
+    <string name="class_name_input">Class Name</string>
+    <string name="professor_name_input">Professor Name</string>
+    <string name="section_input">Section</string>
+    <string name="location_input">Location</string>
+    <string name="room_input">Room</string>
+    <string name="purple_rectangle_description">Purple rectangle on top of screen</string>
 </resources>
