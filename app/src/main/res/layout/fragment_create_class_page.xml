@@ -40,7 +40,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/visual_image_box_for_all_pages" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/class_name_inputBox"
@@ -132,16 +133,67 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="91dp"
+                android:id="@+id/weekday_dropdown_select"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="275dp"
-                android:id="@+id/weekday_dropdown_select"
-                android:hint="Select days of week">
+                android:src="@drawable/top_background_rectangle"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="@string/select_days_of_week"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColorHighlight="@color/white"
+                    app:simpleItems="@array/weekdays_list"
+                    app:simpleItemSelectedColor="#241571">
+
+                </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/time_left_box_input"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="350dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="@string/start_time_box_left" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/time_right_box_input"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="198dp"
+                android:layout_marginTop="350dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="@string/end_right_box" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
