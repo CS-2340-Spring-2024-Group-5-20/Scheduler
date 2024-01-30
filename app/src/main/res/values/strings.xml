@@ -18,4 +18,6 @@
     <string name="start_time_box_left">Start (HH:MM)</string>
     <string name="end_right_box">End (HH:MM)</string>
     <string name="visual_image_box_for_all_pages">Visual image box for all pages.</string>
+    <string name="clear_all_string">Clear All</string>
+    <string name="confirm_button_string">Add Class</string>
 </resources>

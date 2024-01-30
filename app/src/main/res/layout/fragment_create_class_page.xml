@@ -194,6 +194,33 @@
                     android:hint="@string/end_right_box" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/schedule_confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="@string/confirm_button_string"
+                android:textColor="@color/white"
+                android:backgroundTint="#241571"
+                android:background="@drawable/reminder_box"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/time_left_box_input"
+                app:layout_constraintTop_toBottomOf="@+id/weekday_dropdown_select" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/schedule_clearall_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/clear_all_string"
+                android:textColor="@color/black"
+                android:backgroundTint="#DEDEDE"
+                android:background="@drawable/reminder_box"
+                app:layout_constraintBottom_toBottomOf="@+id/schedule_confirm_button"
+                app:layout_constraintEnd_toStartOf="@+id/schedule_confirm_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/schedule_confirm_button" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
