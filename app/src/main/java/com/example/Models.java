@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.Random;
 import java.util.ArrayList;
 public class Models {
+    public Color[] COLOR_CONSTANTS = [red, blue, green, yellow, orange...];
     /**
      * An enum filled with all the days of the week, accessible by any class below which requires fixed days.
      */
@@ -18,7 +19,7 @@ public class Models {
      * The start and end dates will correlate to how long this class should appear repeatedly on the schedule.
      * The start and end dates are inclusive. The first and last times they appear correlate directly to the dates.
      */
-    public class MeetingTime {
+    public class MeetingTime implements Comparable<T> {
         Day meetDay;
         String startTime;
         String endTime;
@@ -81,7 +82,7 @@ public class Models {
      * and when they should meet, a designated professor, and a (temorarily) randomized color to visually identify it.
      */
     public class CollegeClass {
-        Color[] COLOR_CONSTANTS = [red, blue, green, yellow, orange...]
+
         UUID id;
         String classTitle;
         //        ClassObject[] classwork //arraylist (no longer needed as of 1/27, new arraylist will be designated solely for assignments)
@@ -145,7 +146,7 @@ public class Models {
      * string designated for a description.
      * The integer fields for month and day of month exist for sorting purposes.
      */
-    public class Task {
+    public class Task implements Comparable<T> {
         public UUID id;
         public CollegeClass course;
         public String time;
@@ -154,6 +155,7 @@ public class Models {
         public int month;
         public int dayOfMonth;
         public Color color;
+        Random random = new Random();
         /**
          * constructor to account for if this academic task doesnt relate to a specific college course. (aka just a normal reminder)
          * @param time the time at which this task will take place.
@@ -230,26 +232,21 @@ public class Models {
                             break;
                         }
                     }
-                    if (flag == 0) { // reached if these two objects take place at the same time.
-                        if (id > comp.id) { //checks UUID
-                            return 1;
-                        } else {
-                            return -1;
-                        }
-                    }
-                } else {
-                    if (dayOfMonth < comp.dayOfMonth) { //reached if the months are the same but the days aren't.
-                        return 1;
-                    } else {
-                        return -1;
-                    }
+                    return (id.compareTo(comp.id)); // reached if no early returns are done in for-loop.
                 }
-            } else { // reached if the months are not the same
-                if (month < comp.month) {
+
+            } else {
+                if (dayOfMonth < comp.dayOfMonth) { //reached if the months are the same but the days aren't.
                     return 1;
                 } else {
                     return -1;
                 }
+            }
+        } else { // reached if the months are not the same
+            if (month < comp.month) {
+                return 1;
+            } else {
+                return -1;
             }
         }
     }
