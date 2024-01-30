@@ -1,4 +1,4 @@
-// Tyler's model class
+package com.example;// Tyler's model class
 
 import android.graphics.Color;
 
@@ -7,19 +7,17 @@ import java.util.UUID;
 import java.util.Random;
 import java.util.ArrayList;
 public class Models {
-    public Color[] COLOR_CONSTANTS = [red, blue, green, yellow, orange...];
+    public Color[] COLOR_CONSTANTS = [Color];
     /**
      * An enum filled with all the days of the week, accessible by any class below which requires fixed days.
      */
-    public enum Day {
-    "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
-    }
+    public enum Day { Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday};
     /**
      * A class with MeetingTime Objects. These will consist of a day to meet and a start and end time.
      * The start and end dates will correlate to how long this class should appear repeatedly on the schedule.
      * The start and end dates are inclusive. The first and last times they appear correlate directly to the dates.
      */
-    public class MeetingTime implements Comparable<T> {
+    public class MeetingTime implements Comparable<MeetingTime> {
         Day meetDay;
         String startTime;
         String endTime;
@@ -74,6 +72,9 @@ public class Models {
          */
         public String getEndDate() {
             return endDate;
+        }
+        public int compareTo(MeetingTime comp) {
+
         }
     }
     /**
@@ -146,7 +147,7 @@ public class Models {
      * string designated for a description.
      * The integer fields for month and day of month exist for sorting purposes.
      */
-    public class Task implements Comparable<T> {
+    public class Task implements Comparable<Task> {
         public UUID id;
         public CollegeClass course;
         public String time;
@@ -156,29 +157,33 @@ public class Models {
         public int dayOfMonth;
         public Color color;
         Random random = new Random();
+
         /**
          * constructor to account for if this academic task doesnt relate to a specific college course. (aka just a normal reminder)
-         * @param time the time at which this task will take place.
+         *
+         * @param time        the time at which this task will take place.
          * @param description description of task
-         * @param day day of week on which this task will occur
-         * @param month the month when this task will occur (as a number)
-         * @param dayOfMonth day of the month for which this task will occur.
-         * course field is left null and the color will be random.
+         * @param day         day of week on which this task will occur
+         * @param month       the month when this task will occur (as a number)
+         * @param dayOfMonth  day of the month for which this task will occur.
+         *                    course field is left null and the color will be random.
          */
         public Task(String time, String description, Day day, int month, int dayOfMonth) {
             this(null, time, description, day, month, dayOfMonth);
             this.color = COLOR_CONSTANTS[random.nextInt(6)];
         }
+
         /**
          * Constructor for Task objects.
-         * @param course the course for which this task relates to.
-         * @param time the time at which this task will take place.
+         *
+         * @param course      the course for which this task relates to.
+         * @param time        the time at which this task will take place.
          * @param description description of task
-         * @param day day of week on which this task will occur
-         * @param month the month when this task will occur (as a number)
-         * @param dayOfMonth day of the month for which this task will occur.
+         * @param day         day of week on which this task will occur
+         * @param month       the month when this task will occur (as a number)
+         * @param dayOfMonth  day of the month for which this task will occur.
          */
-        public Task(CollegeClass course, String time, String description, Day day, int month, int dayOfMonth){
+        public Task(CollegeClass course, String time, String description, Day day, int month, int dayOfMonth) {
             this.id = UUID.randomUUID();
             this.course = course;
             this.time = time;
@@ -188,65 +193,72 @@ public class Models {
             this.dayOfMonth = dayOfMonth;
             this.color = course.getColor();
         }
+
         public UUID getId() {
             return id;
         }
+
         public CollegeClass getCourse() {
             return course;
         }
+
         public String getTime() {
             return time;
         }
+
         public String getDescription() {
             return description;
         }
+
         public Day getDay() {
             return day;
         }
+
         public int getMonth() {
             return month;
         }
+
         public int getDayOfMonth() {
             return dayOfMonth;
         }
+
         public Color getColor() {
             return color;
         }
+
         /**
          * An override of java's compareTo method, compares two Task objects and returns:
          * - a positive integer if the current object is better than the object passed into the argument.
          * - a negative integer if the current object is less than the object passed into the argument.
          * in the case of this scheduler app, a positive integer is return if the current object comes before the one passed into the argument.
+         *
          * @param comp the Task object that the current object is to be compared to.
          * @return a positive or negative integer.
          */
         public int compareTo(Task comp) {
             if (month == comp.month) {
-                if (dayOfMonth == comp.dayOfMonth && day == day){ // reached if they have the same month
+                if (dayOfMonth == comp.dayOfMonth && day == day) { // reached if they have the same month
                     for (int i = 0; i < 4; i++) { // reached only if they have the same month and day
                         if (time.charAt(i) < comp.time.charAt(i)) { // checks each char at a time to see which one has an earlier time
                             return 1;
-                            break;
                         } else if (time.charAt(i) > comp.time.charAt(i)) {
-                            return = -1;
-                            break;
+                            return -1;
                         }
                     }
                     return (id.compareTo(comp.id)); // reached if no early returns are done in for-loop.
+                } else {
+                    if (dayOfMonth < comp.dayOfMonth) { //reached if the months are the same but the days aren't.
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 }
-
-            } else {
-                if (dayOfMonth < comp.dayOfMonth) { //reached if the months are the same but the days aren't.
+            } else { // reached if the months are not the same
+                if (month < comp.month) {
                     return 1;
                 } else {
                     return -1;
                 }
-            }
-        } else { // reached if the months are not the same
-            if (month < comp.month) {
-                return 1;
-            } else {
-                return -1;
             }
         }
     }
@@ -269,7 +281,7 @@ public class Models {
          * @param dayOfMonth numerical day of the month this exam will occur.
          */
         public Exam(CollegeClass course, String time, String endTime, Day day, int month, int dayOfMonth){
-            this(course, time, endTime, "No description.", day, month, dayOfMonth)
+            this(course, time, endTime, "No description.", day, month, dayOfMonth);
         }
         /**
          * constructor for task objects.
@@ -333,6 +345,8 @@ public class Models {
     public class ScheduleManager {
         public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
         public ArrayList<Task> academicTasks = new ArrayList<Task>();
-        private compareObjects();
+        private int compareObjects(){
+
+        }
     }
 }
