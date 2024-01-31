@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.util.Random;
 import java.util.ArrayList;
 public class Models {
-    public Color[] COLOR_CONSTANTS = [Color];
+//    public Color[] COLOR_CONSTANTS = [Color];
     /**
      * An enum filled with all the days of the week, accessible by any class below which requires fixed days.
      */
@@ -25,8 +25,8 @@ public class Models {
         /**
          * constructor for MeetingTime objects.
          * @param meetDay day that the class will meet.
-         * @param startTime time that class will start on specified meetday.
-         * @param endTime time that class will end on specified meetday.
+         * @param startTime time that class will start on specified meet-day.
+         * @param endTime time that class will end on specified meet-day.
          * @param startDate the date from which the class will start regularly meeting.
          * @param endDate the date at which the class will no longer meet anymore.
          */
@@ -76,7 +76,7 @@ public class Models {
     /**
      * class for CollegeClass objects. These objects will correlate with a college course.
      * Each CollegeClass object will have a unique UUID, class title, an array of MeetingTime objects to correlate to what days
-     * and when they should meet, a designated professor, and a (temorarily) randomized color to visually identify it.
+     * and when they should meet, a designated professor, and a (temporarily) randomized color to visually identify it.
      */
     public class CollegeClass implements Comparable<CollegeClass> {
 
@@ -186,7 +186,7 @@ public class Models {
         /**
          * Getter method for starting time of a class.
          * @return starting time of a class.
-         * Note: only to be used with college class objects without meetingtimes array.
+         * Note: only to be used with college class objects without meeting-times array.
          */
         public String getStartTime() {
             return meetingTime.getStartTime();
@@ -228,7 +228,7 @@ public class Models {
         Random random = new Random();
 
         /**
-         * constructor to account for if this academic task doesnt relate to a specific college course. (aka just a normal reminder)
+         * constructor to account for if this academic task doesn't relate to a specific college course. (aka just a normal reminder)
          *
          * @param time        the time at which this task will take place.
          * @param description description of task
@@ -307,7 +307,7 @@ public class Models {
         public int compareTo(Task comp) {
             if (month == comp.month) {
                 if (dayOfMonth == comp.dayOfMonth && day == day) { // reached if they have the same month
-                    for (int i = 0; i < 4; i++) { // reached only if they have the same month and day
+                    for (int i = 0; i < 4; i++) { // reached only if they have the same day of month and day of the week.
                         if (time.charAt(i) < comp.time.charAt(i)) { // checks each char at a time to see which one has an earlier time
                             return 1;
                         } else if (time.charAt(i) > comp.time.charAt(i)) {
@@ -412,31 +412,85 @@ public class Models {
     }
 
     public class ScheduleManager {
-        public ArrayList<CollegeClass> mondayClasses = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> tuesdayClasses = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> wednesdayClasses = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> thursdayClasses = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> fridayClasses = new ArrayList<CollegeClass>();
-        public ArrayList<Task> academicTasks = new ArrayList<Task>();
-
+        public ArrayList<CollegeClass> mondayClasses = new ArrayList<>();
+        public ArrayList<CollegeClass> tuesdayClasses = new ArrayList<>();
+        public ArrayList<CollegeClass> wednesdayClasses = new ArrayList<>();
+        public ArrayList<CollegeClass> thursdayClasses = new ArrayList<>();
+        public ArrayList<CollegeClass> fridayClasses = new ArrayList<>();
+        public ArrayList<Task> academicTasks = new ArrayList<>();
         /**
-         * To compensate for the fact some classes may meet on different times throughout the week,
-         * and to work better with our current arrangement of one array per day, this method
-         * will take in a college class with multiple meet days, and split them into an array of
-         * CollegeClass objects, each with only one meet-day. This array can further be used to
-         * properly organize classes in their respective Arraylists.
+         * This method will take in a collegeClass argument with a MeetingTimes Array. The method
+         * will go through that array's elements. For each MeetingTime element it finds, it will create
+         * a new collegeClass object with all the same data and add it into the schedule using the
+         * addClassToSchedule method.
          *
          * @param arg the College class with a MeetingTime Array that is to be split.
-         * @return new Array of College Classes.
          */
-        public ArrayList<CollegeClass> classSplitter(CollegeClass arg) {
-            ArrayList<CollegeClass> duplicateCourses = new ArrayList<CollegeClass>();
+        public void classSplitter(CollegeClass arg) {
             for (int i = 0; i < arg.meetingTimes.length; i++) {
-                duplicateCourses.add(new CollegeClass
+                addCourseToSchedule(new CollegeClass
                         (arg.getClassTitle(), arg.meetingTimes[i], arg.getProfessor(),
                                 arg.getClassSection(), arg.getLocation(), arg.getRoomNumber()));
             }
-            return duplicateCourses;
+        }
+        /**
+         * A method which takes in a class that is to be added to the overall schedule, and
+         * relegates the operation to the addCourseToDay method with correct arraylist argument passed in.
+         * @param toAdd CollegeClass object that is to be added.
+         */
+        public void addCourseToSchedule(CollegeClass toAdd) {
+            switch (toAdd.meetingTime.getMeetDay()) {
+                case Monday:
+                    addCourseToDay(mondayClasses, toAdd);
+                    break;
+                case Tuesday:
+                    addCourseToDay(tuesdayClasses, toAdd);
+                    break;
+                case Wednesday:
+                    addCourseToDay(wednesdayClasses, toAdd);
+                    break;
+                case Thursday:
+                    addCourseToDay(thursdayClasses, toAdd);
+                    break;
+                case Friday:
+                    addCourseToDay(fridayClasses, toAdd);
+                    break;
+            }
+        }
+        /**
+         * addTo method which takes in a collegeClass object to add, as well as an arraylist to add the class to.
+         * @param arrayList the intended arrayList correlating to the correct day the toAdd argument belongs to.
+         * @param toAdd the collegeClass object that is to be added into one of the 5 arraylists.
+         */
+        public void addCourseToDay(ArrayList<CollegeClass> arrayList, CollegeClass toAdd) {
+            if (arrayList.isEmpty()) {
+                arrayList.add(toAdd);
+                } else {
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        if (arrayList.get(i).compareTo(toAdd) < 0) {
+                            arrayList.add(i, toAdd);
+                            break;
+                    }
+                }
+            }
+        }
+
+        /**
+         * This method takes in a Task to add to the academicTasks arraylist, and goes through each
+         * index in the arraylist to see where it belongs chronologically.
+         * @param toAdd Task that is to be added.
+         */
+        public void addTaskToSchedule(Task toAdd){
+            if (academicTasks.size() == 0) {
+                academicTasks.add(toAdd);
+            } else {
+                for (int i = 0; i < academicTasks.size(); i++) {
+                    if (academicTasks.get(i).compareTo(toAdd) < 0) {
+                        academicTasks.add(i,toAdd);
+                        break;
+                    }
+                }
+            }
         }
     }
 }
