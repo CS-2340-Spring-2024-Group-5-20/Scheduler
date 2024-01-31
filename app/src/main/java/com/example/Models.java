@@ -2,7 +2,6 @@ package com.example;// Tyler's model class
 
 import android.graphics.Color;
 
-import java.awt.*;
 import java.util.UUID;
 import java.util.Random;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class Models {
      * The start and end dates will correlate to how long this class should appear repeatedly on the schedule.
      * The start and end dates are inclusive. The first and last times they appear correlate directly to the dates.
      */
-    public class MeetingTime implements Comparable<MeetingTime> {
+    public class MeetingTime {
         Day meetDay;
         String startTime;
         String endTime;
@@ -73,22 +72,23 @@ public class Models {
         public String getEndDate() {
             return endDate;
         }
-        public int compareTo(MeetingTime comp) {
-
-        }
     }
     /**
      * class for CollegeClass objects. These objects will correlate with a college course.
      * Each CollegeClass object will have a unique UUID, class title, an array of MeetingTime objects to correlate to what days
      * and when they should meet, a designated professor, and a (temorarily) randomized color to visually identify it.
      */
-    public class CollegeClass {
+    public class CollegeClass implements Comparable<CollegeClass> {
 
         UUID id;
         String classTitle;
         //        ClassObject[] classwork //arraylist (no longer needed as of 1/27, new arraylist will be designated solely for assignments)
         MeetingTime[] meetingTimes;
+        MeetingTime meetingTime;
         String professor;
+        String classSection;
+        String location;
+        String roomNumber;
         Color color; //for now, random color from color array;
         Random random = new Random();
         /**
@@ -97,13 +97,39 @@ public class Models {
          * @param meetingTimes an array of different meeting times.
          * ^this is to account for a class which has non-uniform meeting patterns throughout the week.
          * @param professor the professor for this class.
+         * @param classSection the section you are enrolled in for a certain course.
+         * @param location the building wherein which this class is located in.
+         * @param roomNumber the number of the room where the class is to be held.
          *  the unique UUID will be automatically generated, and the color used will be randomized as well (temporary).
          */
-        public CollegeClass(String classTitle, MeetingTime[] meetingTimes, String professor) {
+        public CollegeClass(String classTitle, MeetingTime[] meetingTimes, String professor, String classSection, String location, String roomNumber) {
             this.id = UUID.randomUUID();
             this.classTitle = classTitle;
             this.meetingTimes = meetingTimes;
             this.professor = professor;
+            this.classSection = classSection;
+            this.location = location;
+            this.roomNumber = roomNumber;
+            color = COLOR_CONSTANTS[random.nextInt(6)];
+        }
+
+        /**
+         * Different constructor for CollegeClass objects meant to work with only one meeting time.
+         * @param classTitle title of college course.
+         * @param meetingTime a meeting time. Details start time, end time, and other details.
+         * @param professor the professor for this class.
+         * @param classSection the section you are enrolled in for a certain course.
+         * @param location the building wherein which this class is located in.
+         * @param roomNumber the number of the room where the class is to be held.
+         */
+        public CollegeClass(String classTitle, MeetingTime meetingTime, String professor, String classSection, String location, String roomNumber) {
+            this.id = UUID.randomUUID();
+            this.classTitle = classTitle;
+            this.meetingTime = meetingTime;
+            this.professor = professor;
+            this.classSection = classSection;
+            this.location = location;
+            this.roomNumber = roomNumber;
             color = COLOR_CONSTANTS[random.nextInt(6)];
         }
         /**
@@ -135,11 +161,54 @@ public class Models {
             return professor;
         }
         /**
+         * Getter for the class section for this class.
+         * @return name of class section for class.
+         */
+        public String getClassSection(){return classSection;}
+        /**
+         * Getter for the building the class is located in.
+         * @return name of building this class is located in.
+         */
+        public String getLocation(){return location;}
+        /**
+         * Getter for the room number this class is in.
+         * @return room number for this class.
+         */
+        public String getRoomNumber(){return roomNumber;}
+        /**
          * Getter for color.
          * @return color.
          */
         public Color getColor() {
             return color;
+        }
+
+        /**
+         * Getter method for starting time of a class.
+         * @return starting time of a class.
+         * Note: only to be used with college class objects without meetingtimes array.
+         */
+        public String getStartTime() {
+            return meetingTime.getStartTime();
+        }
+
+        /**
+         * compares 2 College Class objects (without MeetingTimes Array) and returns an integer.
+         * Returns 1 if the college class object is earlier than the one passed into the argument.
+         * Returns -1 if the college class object in the argument is earlier than the current object.
+         * @param comp college class argument that is meant to be compared to the current one.
+         * @return an integer representing which object occurs earlier.
+         */
+
+        public int compareTo(CollegeClass comp) {
+            for (int i = 0; i < 4; i++) { //compares the digits in their respective start times to see who starts first.
+                if (getStartTime().charAt(i) < comp.getStartTime().charAt(i)) {
+                    return 1;
+                } else if (getStartTime().charAt(i) < comp.getStartTime().charAt(i)) {
+                    return -1;
+                }
+            }
+            return id.compareTo(comp.getUUID()); //Reached only if they take place at the same time.
         }
     }
     /**
@@ -344,14 +413,30 @@ public class Models {
 
     public class ScheduleManager {
         public ArrayList<CollegeClass> mondayClasses = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
-        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> tuesdayClasses = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> wednesdayClasses = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> thursdayClasses = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> fridayClasses = new ArrayList<CollegeClass>();
         public ArrayList<Task> academicTasks = new ArrayList<Task>();
 
-        private int compareObjects(){
-
+        /**
+         * To compensate for the fact some classes may meet on different times throughout the week,
+         * and to work better with our current arrangement of one array per day, this method
+         * will take in a college class with multiple meet days, and split them into an array of
+         * CollegeClass objects, each with only one meet-day. This array can further be used to
+         * properly organize classes in their respective Arraylists.
+         *
+         * @param arg the College class with a MeetingTime Array that is to be split.
+         * @return new Array of College Classes.
+         */
+        public ArrayList<CollegeClass> classSplitter(CollegeClass arg) {
+            ArrayList<CollegeClass> duplicateCourses = new ArrayList<CollegeClass>();
+            for (int i = 0; i < arg.meetingTimes.length; i++) {
+                duplicateCourses.add(new CollegeClass
+                        (arg.getClassTitle(), arg.meetingTimes[i], arg.getProfessor(),
+                                arg.getClassSection(), arg.getLocation(), arg.getRoomNumber()));
+            }
+            return duplicateCourses;
         }
     }
 }
