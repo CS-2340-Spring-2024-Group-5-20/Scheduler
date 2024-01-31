@@ -4,18 +4,18 @@
     <value>
       <entry key="app">
         <State>
-          <multipleDevicesSelectedInDropDown value="true" />
-          <targetsSelectedWithDialog>
+          <targetSelectedWithDropDown>
             <Target>
               <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\tyler\.android\avd\Pixel_7_Pro_API_33.avd" />
+                  <value value="D:\AndroidStudio\ANDRIOD_AVD_HOME\Pixel_6_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetsSelectedWithDialog>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-01-31T01:14:26.231828Z" />
         </State>
       </entry>
     </value>

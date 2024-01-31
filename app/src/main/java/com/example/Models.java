@@ -343,8 +343,13 @@ public class Models {
     }
 
     public class ScheduleManager {
+        public ArrayList<CollegeClass> mondayClasses = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
+        public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
         public ArrayList<CollegeClass> classes = new ArrayList<CollegeClass>();
         public ArrayList<Task> academicTasks = new ArrayList<Task>();
+
         private int compareObjects(){
 
         }
