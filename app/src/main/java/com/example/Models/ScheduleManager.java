@@ -2,6 +2,10 @@ package com.example.Models;
 
 import java.util.ArrayList;
 
+/**
+ * Functional representation of the database for now.
+ * Does not persist after closing the app.
+ */
 public class ScheduleManager {
     public ArrayList<CollegeClass> mondayClasses = new ArrayList<>();
     public ArrayList<CollegeClass> tuesdayClasses = new ArrayList<>();
@@ -31,19 +35,19 @@ public class ScheduleManager {
      */
     public void addCourseToSchedule(CollegeClass toAdd) {
         switch (toAdd.meetingTime.getMeetDay()) {
-            case Day.Monday:
+            case Monday:
                 addCourseToDay(mondayClasses, toAdd);
                 break;
-            case Day.Tuesday:
+            case Tuesday:
                 addCourseToDay(tuesdayClasses, toAdd);
                 break;
-            case Day.Wednesday:
+            case Wednesday:
                 addCourseToDay(wednesdayClasses, toAdd);
                 break;
-            case Day.Thursday:
+            case Thursday:
                 addCourseToDay(thursdayClasses, toAdd);
                 break;
-            case Day.Friday:
+            case Friday:
                 addCourseToDay(fridayClasses, toAdd);
                 break;
         }

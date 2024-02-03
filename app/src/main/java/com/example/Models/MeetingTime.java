@@ -6,15 +6,15 @@ package com.example.Models;
  * The start and end dates are inclusive. The first and last times they appear correlate directly to the dates.
  */
 public class MeetingTime {
-    Models.Day meetDay;
-    String startTime, endTime, startDate, endDate;;
+    Day meetDay;
+    String startTime, endTime;;
     /**
      * constructor for MeetingTime objects.
      * @param meetDay day that the class will meet.
      * @param startTime time that class will start on specified meet-day.
      * @param endTime time that class will end on specified meet-day.
      */
-    public MeetingTime(Models.Day meetDay, String startTime, String endTime) {
+    public MeetingTime(Day meetDay, String startTime, String endTime) {
         this.meetDay = meetDay;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -23,7 +23,7 @@ public class MeetingTime {
      * Getter for which day this class will meet.
      * @return day for which this class meets.
      */
-    public Models.Day getMeetDay() {
+    public Day getMeetDay() {
         return meetDay;
     }
     /**

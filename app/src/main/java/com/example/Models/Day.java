@@ -8,7 +8,7 @@ public enum Day {
     Tuesday,
     Wednesday,
     Thursday,
-    riday,
+    Friday,
     Saturday,
     Sunday
 };

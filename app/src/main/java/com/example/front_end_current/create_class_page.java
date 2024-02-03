@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.Models.CollegeClass;
 import com.example.Models.Day;
 import com.example.Models.MeetingTime;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,14 +25,14 @@ import com.example.Models.MeetingTime;
  * create an instance of this fragment.
  */
 public class create_class_page extends Fragment {
-    private EditText classNameEditText;
-    private EditText professorNameEditText;
-    private EditText sectionEditText;
-    private EditText locationEditText;
-    private EditText roomEditText;
-    private Spinner dayOfWeekSpinner;
-    private EditText startEditText;
-    private EditText endEditText;
+    private TextInputEditText classNameEditText;
+    private TextInputEditText professorNameEditText;
+    private TextInputEditText sectionEditText;
+    private TextInputEditText locationEditText;
+    private TextInputEditText roomEditText;
+    private MaterialAutoCompleteTextView dayOfWeekSpinner;
+    private TextInputEditText startEditText;
+    private TextInputEditText endEditText;
     private Button saveClassButton;
     private Button clearClassButton;
 
@@ -94,7 +97,7 @@ public class create_class_page extends Fragment {
         String section = sectionEditText.getText().toString().trim();
         String location = locationEditText.getText().toString().trim();
         String room = roomEditText.getText().toString().trim();
-        String dayOfWeek = dayOfWeekSpinner.getSelectedItem().toString();
+        String dayOfWeek = dayOfWeekSpinner.getText().toString().trim();
         String start = startEditText.getText().toString().trim();
         String end = endEditText.getText().toString().trim();
 
@@ -106,6 +109,8 @@ public class create_class_page extends Fragment {
         }
 
         MeetingTime meetingTime = new MeetingTime(Day.valueOf(dayOfWeek),start,end);
+        CollegeClass collegeClass = new CollegeClass(className, new MeetingTime[]{meetingTime}, professorName, section,
+                location, room);
 
         //saveClassToDatabase();
 
