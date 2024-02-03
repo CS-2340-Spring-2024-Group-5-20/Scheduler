@@ -44,7 +44,7 @@
                 android:contentDescription="@string/visual_image_box_for_all_pages" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/class_name_inputBox"
+                android:id="@+id/classNameEditText"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="325dp"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/professor_input"
+                android:id="@+id/professorNameEditText"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -79,7 +79,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/section_input"
+                android:id="@+id/sectionEditText"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="265dp"
@@ -98,7 +98,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/location_input"
+                android:id="@+id/locationEditText"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -115,7 +115,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/room_input"
+                android:id="@+id/roomEditText"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="265dp"
@@ -133,7 +133,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/weekday_dropdown_select"
+                android:id="@+id/dayOfWeekSpinner"
                 android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -158,7 +158,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/time_left_box_input"
+                android:id="@+id/startEditText"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -177,7 +177,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/time_right_box_input"
+                android:id="@+id/endEditText"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="198dp"
@@ -195,7 +195,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/schedule_confirm_button"
+                android:id="@+id/saveClassButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
@@ -209,7 +209,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/weekday_dropdown_select" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/schedule_clearall_button"
+                android:id="@+id/clearClassButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"

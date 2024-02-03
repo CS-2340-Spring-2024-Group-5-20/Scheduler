@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,34 +19,28 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class create_class_page extends Fragment {
+    private EditText classNameEditText;
+    private EditText professorNameEditText;
+    private EditText sectionEditText;
+    private EditText locationEditText;
+    private EditText roomEditText;
+    private Spinner dayOfWeekSpinner;
+    private EditText startEditText;
+    private EditText endEditText;
+    private Button saveClassButton;
+    private Button clearClassButton;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public create_class_page() {
-        // Required empty public constructor
-    }
+    /*
+     * Required empty public constructor
+     */
+    public create_class_page() {}
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment create_class_page.
+     * @return new instance of fragment
      */
-    // TODO: Rename and change types and number of parameters
-    public static create_class_page newInstance(String param1, String param2) {
+    public static create_class_page newInstance() {
         create_class_page fragment = new create_class_page();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,16 +48,64 @@ public class create_class_page extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_class_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_class_page, container, false);
+
+        classNameEditText = view.findViewById(R.id.classNameEditText);
+        professorNameEditText = view.findViewById(R.id.professorNameEditText);
+        sectionEditText = view.findViewById(R.id.sectionEditText);
+        locationEditText = view.findViewById(R.id.locationEditText);
+        roomEditText = view.findViewById(R.id.roomEditText);
+        dayOfWeekSpinner = view.findViewById(R.id.dayOfWeekSpinner);
+        startEditText = view.findViewById(R.id.startEditText);
+        endEditText = view.findViewById(R.id.endEditText);
+        saveClassButton = view.findViewById(R.id.saveClassButton);
+        clearClassButton = view.findViewById(R.id.clearClassButton);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.weekdays_list, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dayOfWeekSpinner.setAdapter(adapter);
+
+        saveClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveClass();
+            }
+        });
+
+        return view;
+    }
+
+    /**
+     * Function to load the content from the fragment and save to the database;
+     */
+    private void saveClass() {
+        String className = classNameEditText.getText().toString().trim();
+        String professorName = professorNameEditText.getText().toString().trim();
+        String section = sectionEditText.getText().toString().trim();
+        String location = locationEditText.getText().toString().trim();
+        String room = roomEditText.getText().toString().trim();
+        String dayOfWeek = dayOfWeekSpinner.getSelectedItem().toString();
+        String start = startEditText.getText().toString().trim();
+        String end = endEditText.getText().toString().trim();
+
+        if (className.isEmpty() || professorName.isEmpty() || section.isEmpty()
+            || location.isEmpty() || room.isEmpty() || dayOfWeek.isEmpty()
+            || start.isEmpty() || end.isEmpty() ) {
+            Toast.makeText(requireContext(), "Please enter event details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //saveClassToDatabase();
+
+        Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
+
+        // navigate back to schedule fragment
     }
 }
