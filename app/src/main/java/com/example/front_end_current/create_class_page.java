@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.Models.Day;
+import com.example.Models.MeetingTime;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link create_class_page#newInstance} factory method to
@@ -101,6 +104,8 @@ public class create_class_page extends Fragment {
             Toast.makeText(requireContext(), "Please enter event details", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        MeetingTime meetingTime = new MeetingTime(Day.valueOf(dayOfWeek),start,end);
 
         //saveClassToDatabase();
 
