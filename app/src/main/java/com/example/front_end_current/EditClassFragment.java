@@ -1,17 +1,15 @@
 package com.example.front_end_current;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.Models.CollegeClass;
 import com.example.Models.Day;
@@ -20,12 +18,10 @@ import com.example.Models.ScheduleManager;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateClassPage#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CreateClassPage extends Fragment {
+import java.io.Serializable;
+import java.util.UUID;
+
+public class EditClassFragment extends Fragment {
     private TextInputEditText classNameEditText;
     private TextInputEditText professorNameEditText;
     private TextInputEditText sectionEditText;
@@ -36,32 +32,22 @@ public class CreateClassPage extends Fragment {
     private TextInputEditText endEditText;
     private Button saveClassButton;
     private Button clearClassButton;
+    public EditClassFragment() {
+        // Required empty public constructor
+    }
 
-    /*
-     * Required empty public constructor
-     */
-    public CreateClassPage() {}
-
-    /**
-     * @return new instance of fragment
-     */
-    public static CreateClassPage newInstance() {
-        CreateClassPage fragment = new CreateClassPage();
+    public static EditClassFragment newInstance(CollegeClass collegeClass) {
+        EditClassFragment fragment = new EditClassFragment();
         Bundle args = new Bundle();
+        args.putSerializable("collegeClass", (Serializable) collegeClass);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_create_class_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_class, container, false);
 
         classNameEditText = view.findViewById(R.id.classNameEditText);
         professorNameEditText = view.findViewById(R.id.professorNameEditText);
@@ -74,15 +60,25 @@ public class CreateClassPage extends Fragment {
         saveClassButton = view.findViewById(R.id.saveClassButton);
         clearClassButton = view.findViewById(R.id.clearClassButton);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.weekdays_list, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dayOfWeekSpinner.setAdapter(adapter);
+        // Get the CollegeClass object from arguments
+        CollegeClass collegeClass = (CollegeClass) getArguments().getSerializable("collegeClass");
 
+        // Pre-fill EditText fields with the details of the CollegeClass object
+        classNameEditText.setText(collegeClass.getClassTitle());
+        professorNameEditText.setText(collegeClass.getProfessor());
+        sectionEditText.setText(collegeClass.getClassSection());
+        locationEditText.setText(collegeClass.getLocation());
+        roomEditText.setText(collegeClass.getRoomNumber());
+        dayOfWeekSpinner.setText(collegeClass.getMeetingTime().getMeetDay().toString());
+        startEditText.setText(collegeClass.getMeetingTime().getStartTime());
+        endEditText.setText(collegeClass.getMeetingTime().getEndTime());
+
+        // Set OnClickListener for the Save button
         saveClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveClass();
+                // Save changes and navigate back to previous fragment
+                saveClass(collegeClass.getUUID());
             }
         });
 
@@ -92,7 +88,8 @@ public class CreateClassPage extends Fragment {
     /**
      * Function to load the content from the fragment and save to the database;
      */
-    private void saveClass() {
+    private void saveClass(UUID id) {
+
         String className = classNameEditText.getText().toString().trim();
         String professorName = professorNameEditText.getText().toString().trim();
         String section = sectionEditText.getText().toString().trim();
@@ -103,8 +100,8 @@ public class CreateClassPage extends Fragment {
         String end = endEditText.getText().toString().trim();
 
         if (className.isEmpty() || professorName.isEmpty() || section.isEmpty()
-            || location.isEmpty() || room.isEmpty() || dayOfWeek.isEmpty()
-            || start.isEmpty() || end.isEmpty() ) {
+                || location.isEmpty() || room.isEmpty() || dayOfWeek.isEmpty()
+                || start.isEmpty() || end.isEmpty() ) {
             Toast.makeText(requireContext(), "Please enter event details", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -116,11 +113,12 @@ public class CreateClassPage extends Fragment {
         if (Database.DATABASE == null) {
             Log.e("YourFragment", "ScheduleManager is not initialized");
         } else {
-            Database.DATABASE.addCourseToSchedule(collegeClass);
+            Database.DATABASE.updateCourseByUUID(id, collegeClass);
         }
 
         Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
 
+        // navigate back to schedule fragment
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }

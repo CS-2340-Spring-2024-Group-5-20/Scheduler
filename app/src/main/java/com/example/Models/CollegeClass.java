@@ -5,12 +5,14 @@ import android.graphics.Color;
 import java.util.Random;
 import java.util.UUID;
 
+import java.io.Serializable;
+
 /**
  * class for CollegeClass objects. These objects will correlate with a college course.
  * Each CollegeClass object will have a unique UUID, class title, an array of MeetingTime objects to correlate to what days
  * and when they should meet, a designated professor, and a (temporarily) randomized color to visually identify it.
  */
-public class CollegeClass implements Comparable<CollegeClass> {
+public class CollegeClass implements Comparable<CollegeClass>, Serializable {
 
     private UUID id;
     private String classTitle;
@@ -23,6 +25,7 @@ public class CollegeClass implements Comparable<CollegeClass> {
     private MeetingTime meetingTime;
     private Color color; //for now, random color from color array;
     private Random random = new Random();
+    private boolean isEditable;
     /**
      * Constructor for CollegeClass objects.
      * @param classTitle title of college course.

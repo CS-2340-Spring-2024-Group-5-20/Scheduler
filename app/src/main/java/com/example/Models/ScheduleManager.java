@@ -1,6 +1,11 @@
 package com.example.Models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Functional representation of the database for now.
@@ -97,6 +102,37 @@ public class ScheduleManager {
                     academicTasks.add(i,toAdd);
                     break;
                 }
+            }
+        }
+    }
+
+    public void updateCourseByUUID(UUID id, CollegeClass toUpdate) {
+        switch (toUpdate.getMeetingTime().getMeetDay()) {
+            case Monday:
+                updateCourseToDayByUUID(id, mondayClasses, toUpdate);
+                break;
+            case Tuesday:
+                updateCourseToDayByUUID(id, tuesdayClasses, toUpdate);
+                break;
+            case Wednesday:
+                updateCourseToDayByUUID(id, wednesdayClasses, toUpdate);
+                break;
+            case Thursday:
+                updateCourseToDayByUUID(id, thursdayClasses, toUpdate);
+                break;
+            case Friday:
+                updateCourseToDayByUUID(id, fridayClasses, toUpdate);
+                break;
+        }
+    }
+
+    public void updateCourseToDayByUUID(UUID id, List<CollegeClass> dayClasses, CollegeClass toUpdate) {
+        for (int i = 0; i < dayClasses.size(); i++) {
+            CollegeClass course = dayClasses.get(i);
+            if (course.getUUID().equals(id)) {
+                dayClasses.set(i, toUpdate);
+                Log.d("ScheduleManager", "Course updated: " + toUpdate.getClassTitle());
+                break;
             }
         }
     }
