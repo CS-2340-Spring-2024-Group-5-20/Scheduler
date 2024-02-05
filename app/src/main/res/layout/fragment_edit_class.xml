@@ -1,109 +1,248 @@
-<!-- fragment_edit_class.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#DEDEDE"
+    tools:context=".MainActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="173dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/classNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Class Name" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </FrameLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/professorNameEditText"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Professor Name" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="150dp"
+            android:src="@drawable/top_background_rectangle"
+            android:contentDescription="@string/purple_rectangle_description" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/sectionEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Section" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="379dp"
+                android:layout_height="648dp"
+                android:src="@drawable/reminder_box"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/visual_image_box_for_all_pages" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/locationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Location" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/classNameEditLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="325dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="50dp"
+                app:endIconMode="clear_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/classNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Class Name" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/roomEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Room Number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/professorNameEditLayout"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="125dp"
+                app:endIconMode="clear_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/professorNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/professor_name_input" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/dayOfWeekSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Day of Week" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/sectionEditLayout"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="265dp"
+                android:layout_marginTop="125dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sectionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="2"
+                    android:hint="@string/section_input" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/startEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Start Time" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/locationEditLayout"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="200dp"
+                app:endIconMode="clear_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/locationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location_input" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/endEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="End Time" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/roomEditLayout"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="265dp"
+                android:layout_marginTop="200dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Save Button -->
-    <Button
-        android:id="@+id/saveClassButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/roomEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="@string/room_input" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Clear Button (Optional) -->
-    <Button
-        android:id="@+id/clearClassButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear" />
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="325dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="275dp"
+                android:src="@drawable/top_background_rectangle"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="@string/select_days_of_week"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/dayOfWeekSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColorHighlight="@color/white"
+                    app:simpleItems="@array/weekdays_list"
+                    app:simpleItemSelectedColor="#241571"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/startEditLayout"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="350dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/startEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="Start Time" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/endEditLayout"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="198dp"
+                android:layout_marginTop="350dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/endEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="End Time" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveClassButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="150dp"
+                android:background="@drawable/reminder_box"
+                android:backgroundTint="#241571"
+                android:text="Save"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/startEditLayout" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/clearClassButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/clear_all_string"
+                android:textColor="@color/black"
+                android:backgroundTint="#DEDEDE"
+                android:background="@drawable/reminder_box"
+                app:layout_constraintBottom_toBottomOf="@+id/saveClassButton"
+                app:layout_constraintEnd_toStartOf="@+id/saveClassButton"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/saveClassButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="300dp"
+        android:layout_height="144dp"
+        android:text="Edit Schedule"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        app:layout_anchor="@+id/frame_layout"
+        app:layout_anchorGravity="bottom|left" />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
