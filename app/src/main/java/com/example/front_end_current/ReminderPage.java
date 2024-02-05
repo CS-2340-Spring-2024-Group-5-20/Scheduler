@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link create_class_page#newInstance} factory method to
+ * Use the {@link ReminderPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class create_class_page extends Fragment {
+public class ReminderPage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class create_class_page extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public create_class_page() {
+    public ReminderPage() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class create_class_page extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment create_class_page.
+     * @return A new instance of fragment reminderpage.
      */
     // TODO: Rename and change types and number of parameters
-    public static create_class_page newInstance(String param1, String param2) {
-        create_class_page fragment = new create_class_page();
+    public static ReminderPage newInstance(String param1, String param2) {
+        ReminderPage fragment = new ReminderPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class create_class_page extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_class_page, container, false);
+        return inflater.inflate(R.layout.fragment_reminderpage, container, false);
     }
 }

@@ -40,10 +40,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/visual_image_box_for_all_pages" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/class_name_inputBox"
+                android:id="@+id/classNameEditLayout"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="325dp"
                 android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/classNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/class_name_input" />
@@ -61,7 +63,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/professor_input"
+                android:id="@+id/professorNameEditLayout"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -71,6 +73,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/professorNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/professor_name_input" />
@@ -78,7 +81,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/section_input"
+                android:id="@+id/sectionEditLayout"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="265dp"
@@ -89,6 +92,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sectionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="2"
@@ -97,7 +101,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/location_input"
+                android:id="@+id/locationEditLayout"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -107,6 +111,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/locationEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_input" />
@@ -114,7 +119,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:id="@+id/room_input"
+                android:id="@+id/roomEditLayout"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="265dp"
@@ -125,6 +130,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/roomEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="5"
@@ -132,16 +138,97 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="91dp"
+                android:id="@+id/dayOfWeekLayout"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="275dp"
-                android:id="@+id/weekday_dropdown_select"
-                android:hint="Select days of week">
+                android:src="@drawable/top_background_rectangle"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="@string/select_days_of_week"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/dayOfWeekSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColorHighlight="@color/white"
+                    app:simpleItems="@array/weekdays_list"
+                    app:simpleItemSelectedColor="#241571">
+
+                </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/startEditLayout"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="350dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/startEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="@string/start_time_box_left" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:id="@+id/endEditLayout"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="198dp"
+                android:layout_marginTop="350dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/endEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:hint="@string/end_right_box" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveClassButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="@string/confirm_button_string"
+                android:textColor="@color/white"
+                android:backgroundTint="#241571"
+                android:background="@drawable/reminder_box"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/startEditLayout"
+                app:layout_constraintTop_toBottomOf="@+id/dayOfWeekLayout" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/clearClassButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/clear_all_string"
+                android:textColor="@color/black"
+                android:backgroundTint="#DEDEDE"
+                android:background="@drawable/reminder_box"
+                app:layout_constraintBottom_toBottomOf="@+id/saveClassButton"
+                app:layout_constraintEnd_toStartOf="@+id/saveClassButton"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/saveClassButton" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
