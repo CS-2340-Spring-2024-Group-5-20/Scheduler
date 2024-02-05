@@ -12,17 +12,17 @@ import java.util.UUID;
  */
 public class CollegeClass implements Comparable<CollegeClass> {
 
-    UUID id;
-    String classTitle;
+    private UUID id;
+    private String classTitle;
     //        ClassObject[] classwork //arraylist (no longer needed as of 1/27, new arraylist will be designated solely for assignments)
-    String professor;
-    String classSection;
-    String location;
-    String roomNumber;
-    MeetingTime[] meetingTimes;
-    MeetingTime meetingTime;
-    Color color; //for now, random color from color array;
-    Random random = new Random();
+    private String professor;
+    private String classSection;
+    private String location;
+    private String roomNumber;
+    private MeetingTime[] meetingTimes;
+    private MeetingTime meetingTime;
+    private Color color; //for now, random color from color array;
+    private Random random = new Random();
     /**
      * Constructor for CollegeClass objects.
      * @param classTitle title of college course.
@@ -85,6 +85,13 @@ public class CollegeClass implements Comparable<CollegeClass> {
     public MeetingTime[] getMeetingTimes () {
         return meetingTimes;
     }
+
+    /**
+     * Getter for MeetingTime if singular meeting time is used.
+     * @return MeetingTime object of college class.
+     */
+    public MeetingTime getMeetingTime() {return meetingTime; }
+
     /**
      * Getter for the professor that teaches this class.
      * @return name of professor that teaches this class.

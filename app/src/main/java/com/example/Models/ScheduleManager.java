@@ -7,12 +7,25 @@ import java.util.ArrayList;
  * Does not persist after closing the app.
  */
 public class ScheduleManager {
-    public ArrayList<CollegeClass> mondayClasses = new ArrayList<>();
-    public ArrayList<CollegeClass> tuesdayClasses = new ArrayList<>();
-    public ArrayList<CollegeClass> wednesdayClasses = new ArrayList<>();
-    public ArrayList<CollegeClass> thursdayClasses = new ArrayList<>();
-    public ArrayList<CollegeClass> fridayClasses = new ArrayList<>();
-    public ArrayList<Task> academicTasks = new ArrayList<>();
+    public ArrayList<CollegeClass> mondayClasses;
+    public ArrayList<CollegeClass> tuesdayClasses;
+    public ArrayList<CollegeClass> wednesdayClasses;
+    public ArrayList<CollegeClass> thursdayClasses;
+    public ArrayList<CollegeClass> fridayClasses;
+    public ArrayList<Task> academicTasks;
+
+    /**
+     * Default constructor for the schedule manager.
+     */
+    public ScheduleManager() {
+        mondayClasses = new ArrayList<CollegeClass>();
+        tuesdayClasses = new ArrayList<CollegeClass>();
+        wednesdayClasses = new ArrayList<CollegeClass>();
+        thursdayClasses = new ArrayList<CollegeClass>();
+        fridayClasses = new ArrayList<CollegeClass>();
+        academicTasks = new ArrayList<Task>();
+    }
+
     /**
      * This method will take in a collegeClass argument with a MeetingTimes Array. The method
      * will go through that array's elements. For each MeetingTime element it finds, it will create
@@ -22,9 +35,9 @@ public class ScheduleManager {
      * @param arg the College class with a MeetingTime Array that is to be split.
      */
     public void classSplitter(CollegeClass arg) {
-        for (int i = 0; i < arg.meetingTimes.length; i++) {
+        for (int i = 0; i < arg.getMeetingTimes().length; i++) {
             addCourseToSchedule(new CollegeClass
-                    (arg.getClassTitle(), arg.meetingTimes[i], arg.getProfessor(),
+                    (arg.getClassTitle(), arg.getMeetingTimes()[i], arg.getProfessor(),
                             arg.getClassSection(), arg.getLocation(), arg.getRoomNumber()));
         }
     }
@@ -34,7 +47,7 @@ public class ScheduleManager {
      * @param toAdd CollegeClass object that is to be added.
      */
     public void addCourseToSchedule(CollegeClass toAdd) {
-        switch (toAdd.meetingTime.getMeetDay()) {
+        switch (toAdd.getMeetingTime().getMeetDay()) {
             case Monday:
                 addCourseToDay(mondayClasses, toAdd);
                 break;

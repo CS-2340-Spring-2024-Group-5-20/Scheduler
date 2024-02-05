@@ -4,27 +4,27 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.Models.CollegeClass;
 import com.example.Models.Day;
 import com.example.Models.MeetingTime;
+import com.example.Models.ScheduleManager;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link create_class_page#newInstance} factory method to
+ * Use the {@link CreateClassPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class create_class_page extends Fragment {
+public class CreateClassPage extends Fragment {
     private TextInputEditText classNameEditText;
     private TextInputEditText professorNameEditText;
     private TextInputEditText sectionEditText;
@@ -35,17 +35,18 @@ public class create_class_page extends Fragment {
     private TextInputEditText endEditText;
     private Button saveClassButton;
     private Button clearClassButton;
+    private ScheduleManager scheduleManager;
 
     /*
      * Required empty public constructor
      */
-    public create_class_page() {}
+    public CreateClassPage() {}
 
     /**
      * @return new instance of fragment
      */
-    public static create_class_page newInstance() {
-        create_class_page fragment = new create_class_page();
+    public static CreateClassPage newInstance() {
+        CreateClassPage fragment = new CreateClassPage();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -109,13 +110,23 @@ public class create_class_page extends Fragment {
         }
 
         MeetingTime meetingTime = new MeetingTime(Day.valueOf(dayOfWeek),start,end);
-        CollegeClass collegeClass = new CollegeClass(className, new MeetingTime[]{meetingTime}, professorName, section,
+        CollegeClass collegeClass = new CollegeClass(className, meetingTime, professorName, section,
                 location, room);
+
+        if (this.scheduleManager == null) {
+            Log.e("YourFragment", "ScheduleManager is not initialized");
+        } else {
+            scheduleManager.addCourseToSchedule(collegeClass);
+        }
 
         //saveClassToDatabase();
 
         Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
 
         // navigate back to schedule fragment
+    }
+
+    public void setScheduleManager(ScheduleManager schedulerManager) {
+        this.scheduleManager = schedulerManager;
     }
 }

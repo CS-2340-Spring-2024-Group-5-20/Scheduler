@@ -9,12 +9,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.Models.CollegeClass;
+import com.example.Models.Day;
+import com.example.Models.Day.*;
+import com.example.Models.MeetingTime;
+import com.example.Models.ScheduleManager;
 import com.example.front_end_current.R.layout;
 import com.example.front_end_current.databinding.ActivityMainBinding;
 
 import kotlin.Metadata;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Metadata(
     mv = {1, 9, 0},
@@ -25,26 +36,38 @@ import org.jetbrains.annotations.Nullable;
 public final class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     Button button;
+    ScheduleManager scheduleManager;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        scheduleManager = new ScheduleManager();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         button = (Button) findViewById(R.id.middle_menu_button);
         setContentView(binding.getRoot());
         binding.bottomMenu.setBackground(null);
         binding.bottomMenu.setOnItemSelectedListener(item ->{
                 if (item.getItemId() == R.id.reminders) {
-                    changeFragment(new reminderpage());
+                    ReminderPage reminderPage = new ReminderPage();
+                    changeFragment(reminderPage);
                 } else if (item.getItemId() == R.id.schedule) {
-                    changeFragment(new schedulepage());
+                    SchedulePage schedulePage = new SchedulePage();
+                    schedulePage.setScheduleManager(scheduleManager);
+                    changeFragment(schedulePage);
                 }
                 return true;
         });
         binding.middleMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFragment(new create_class_page());
+                CreateClassPage createClassPage = new CreateClassPage();
+                createClassPage.setScheduleManager(scheduleManager);
+                changeFragment(
+                    createClassPage
+                );
             }
         });
+        SchedulePage schedulePage = new SchedulePage();
+        schedulePage.setScheduleManager(scheduleManager);
+        changeFragment(schedulePage);
     }
 
     private void changeFragment(Fragment fragment) {
@@ -54,6 +77,10 @@ public final class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
     private void buttonClicked() {
-        changeFragment(new create_class_page());
+        CreateClassPage createClassPage = new CreateClassPage();
+        createClassPage.setScheduleManager(scheduleManager);
+        changeFragment(
+                createClassPage
+        );
     }
 }
