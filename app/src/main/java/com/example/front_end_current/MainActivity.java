@@ -56,9 +56,8 @@ public final class MainActivity extends AppCompatActivity implements CollegeClas
         binding.middleMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateClassPage createClassPage = new CreateClassPage();
                 changeTheFragment(
-                    createClassPage
+                    new CreateTaskFragment()
                 );
             }
         });
@@ -83,10 +82,14 @@ public final class MainActivity extends AppCompatActivity implements CollegeClas
         transaction.addToBackStack(null);
         transaction.commit();
     }
+//    private void buttonClicked() {
+//        CreateClassPage createClassPage = new CreateClassPage();
+//        changeTheFragment(
+//                createClassPage
+//        );
+//    }
     private void buttonClicked() {
-        CreateClassPage createClassPage = new CreateClassPage();
-        changeTheFragment(
-                createClassPage
-        );
+        CreateTaskFragment createTaskFragment = new CreateTaskFragment();
+        changeFragment(createTaskFragment);
     }
 }

@@ -8,5 +8,9 @@
         <item>Friday</item>
         <item>Saturday</item>
     </string-array>
-
+    <string-array name="task_types">
+        <item>Task</item>
+        <item>Exam</item>
+        <item>Assignment</item>
+    </string-array>
 </resources>

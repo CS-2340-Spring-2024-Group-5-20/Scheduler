@@ -3,8 +3,10 @@ package com.example.Models;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -135,5 +137,23 @@ public class ScheduleManager {
                 break;
             }
         }
+    }
+
+    public ArrayList<CollegeClass> getAllClasses() {
+        ArrayList<CollegeClass> allClasses = new ArrayList<>();
+
+        // Add classes from Monday to Friday
+        allClasses.addAll(mondayClasses);
+        allClasses.addAll(tuesdayClasses);
+        allClasses.addAll(wednesdayClasses);
+        allClasses.addAll(thursdayClasses);
+        allClasses.addAll(fridayClasses);
+
+        // Remove duplicates (if any)
+        Set<CollegeClass> set = new HashSet<>(allClasses);
+        allClasses.clear();
+        allClasses.addAll(set);
+
+        return allClasses;
     }
 }
