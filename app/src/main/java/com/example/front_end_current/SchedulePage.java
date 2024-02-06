@@ -50,9 +50,6 @@ public class SchedulePage extends Fragment  implements CollegeClassAdapter.Fragm
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        // Add divider between items
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
         // Initialize ScheduleManagerLogger
         scheduleManagerLogger = new ScheduleManagerLogger();
 

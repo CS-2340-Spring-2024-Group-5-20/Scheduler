@@ -14,7 +14,6 @@
 
     </FrameLayout>
 
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -61,7 +60,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/textView"

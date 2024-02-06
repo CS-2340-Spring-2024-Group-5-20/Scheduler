@@ -48,7 +48,6 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         adapter.setFragmentChangeListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         loadTasks();
