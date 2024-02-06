@@ -1,6 +1,7 @@
 package com.example.front_end_current;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -144,6 +145,14 @@ public class CreateTaskFragment extends Fragment {
         } else {
             endTime = "";
         }
+
+        if (TextUtils.isEmpty(taskDescription) || TextUtils.isEmpty(startTime) ||
+                TextUtils.isEmpty(endTime) || TextUtils.isEmpty(dayEditText.getText().toString()) ||
+                TextUtils.isEmpty(String.valueOf(monthEditText.getText().toString()))) {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         int day = Integer.valueOf(dayEditText.getText().toString().trim());
         int month= Integer.valueOf(monthEditText.getText().toString().trim());
 

@@ -112,7 +112,7 @@ public class CreateClassPage extends Fragment {
         if (className.isEmpty() || professorName.isEmpty() || section.isEmpty()
             || location.isEmpty() || room.isEmpty() || dayOfWeek.isEmpty()
             || start.isEmpty() || end.isEmpty() ) {
-            Toast.makeText(requireContext(), "Please enter event details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Please enter class details", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -126,7 +126,7 @@ public class CreateClassPage extends Fragment {
             Database.DATABASE.addCourseToSchedule(collegeClass);
         }
 
-        Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Class saved successfully", Toast.LENGTH_SHORT).show();
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
