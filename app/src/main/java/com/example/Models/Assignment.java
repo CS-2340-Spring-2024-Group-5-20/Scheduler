@@ -32,7 +32,7 @@ public class Assignment extends Task {
      */
     public Assignment (CollegeClass course, String time, String description, int month, int dayOfMonth){
         super(time, description, month, dayOfMonth);
-        this.dueDate = String.format("%s, %s/%s at %s", month, dayOfMonth, time);
+        this.dueDate = String.format("%d, %d at %s", month, dayOfMonth, time);
         this.collegeClass = course;
     }
     public String getDueDate() {

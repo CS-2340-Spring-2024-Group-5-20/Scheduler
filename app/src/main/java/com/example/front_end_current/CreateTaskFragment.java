@@ -141,7 +141,7 @@ public class CreateTaskFragment extends Fragment {
         String endTime = endTimeEditText.getText().toString().trim();
         int day = Integer.valueOf(dayEditText.getText().toString().trim());
         int month= Integer.valueOf(monthEditText.getText().toString().trim());
-        CollegeClass selectedCollegeClass = (CollegeClass) collegeClassSpinner.getSelectedItem();
+        CollegeClass selectedCollegeClass = (CollegeClass) Database.DATABASE.getCollegeClassByName(collegeClassSpinner.getSelectedItem().toString());
 
         // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();

@@ -198,4 +198,28 @@ public class ScheduleManager {
             }
         }
     }
+
+    // Method to get a CollegeClass object by its name from all ArrayLists
+    public CollegeClass getCollegeClassByName(String className) {
+        List<List<CollegeClass>> allDayClasses = new ArrayList<>();
+        allDayClasses.add(mondayClasses);
+        allDayClasses.add(tuesdayClasses);
+        allDayClasses.add(wednesdayClasses);
+        allDayClasses.add(thursdayClasses);
+        allDayClasses.add(fridayClasses);
+
+        // Iterate through each ArrayList of CollegeClass objects
+        for (List<CollegeClass> dayClasses : allDayClasses) {
+            // Iterate through the list of CollegeClass objects for the current day
+            for (CollegeClass collegeClass : dayClasses) {
+                // Compare the names ignoring case
+                if (collegeClass.getClassTitle().equalsIgnoreCase(className)) {
+                    // Return the CollegeClass object if the names match
+                    return collegeClass;
+                }
+            }
+        }
+        // Return null if no matching CollegeClass is found
+        return null;
+    }
 }

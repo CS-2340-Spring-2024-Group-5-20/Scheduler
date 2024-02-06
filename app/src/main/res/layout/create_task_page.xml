@@ -71,8 +71,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
         android:hint="Enter Day"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endTimeEditText"/>
 
     <!-- EditText for entering month -->
@@ -85,8 +85,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
         android:hint="Enter Month"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dayEditText"/>
 
     <!-- Spinner for selecting College Class -->
@@ -97,9 +97,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:spinnerMode="dropdown"
         app:layout_constraintTop_toBottomOf="@+id/monthEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
