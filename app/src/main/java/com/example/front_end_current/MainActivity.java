@@ -2,6 +2,7 @@ package com.example.front_end_current;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -33,7 +34,7 @@ import java.util.List;
     d1 = {"\u0000\u0018\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\u0012\u0010\u0003\u001a\u00020\u00042\b\u0010\u0005\u001a\u0004\u0018\u00010\u0006H\u0014¨\u0006\u0007"},
     d2 = {"Lcom/example/front_end_current/MainActivity;", "Landroidx/appcompat/app/AppCompatActivity;", "()V", "onCreate", "", "savedInstanceState", "Landroid/os/Bundle;", "app_debug"}
 )
-public final class MainActivity extends AppCompatActivity implements CollegeClassAdapter.FragmentChangeListener{
+public final class MainActivity extends AppCompatActivity implements TaskAdapter.FragmentChangeListener, CollegeClassAdapter.FragmentChangeListener{
     ActivityMainBinding binding;
     Button button;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,30 +47,17 @@ public final class MainActivity extends AppCompatActivity implements CollegeClas
         binding.bottomMenu.setOnItemSelectedListener(item ->{
                 if (item.getItemId() == R.id.reminders) {
                     ReminderPage reminderPage = new ReminderPage();
-                    changeTheFragment(reminderPage);
+                    changeFragment(reminderPage);
                 } else if (item.getItemId() == R.id.schedule) {
                     SchedulePage schedulePage = new SchedulePage();
-                    changeTheFragment(schedulePage);
+                    changeFragment(schedulePage);
                 }
                 return true;
         });
         binding.middleMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeTheFragment(
-                    new CreateTaskFragment()
-                );
-            }
+            @Override public void onClick(View v) {buttonClicked();}
         });
-        ReminderPage reminderPage = new ReminderPage();
-        changeTheFragment(reminderPage);
-    }
-
-    private void changeTheFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+        changeFragment(new ReminderPage());
     }
 
     @Override
@@ -82,14 +70,8 @@ public final class MainActivity extends AppCompatActivity implements CollegeClas
         transaction.addToBackStack(null);
         transaction.commit();
     }
-//    private void buttonClicked() {
-//        CreateClassPage createClassPage = new CreateClassPage();
-//        changeTheFragment(
-//                createClassPage
-//        );
-//    }
+
     private void buttonClicked() {
-        CreateTaskFragment createTaskFragment = new CreateTaskFragment();
-        changeFragment(createTaskFragment);
+        changeFragment(new SelectorFragment());
     }
 }

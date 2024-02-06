@@ -12,21 +12,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+
+import androidx.annotation.NonNull;
+
 import com.example.Models.Assignment;
 import com.example.Models.CollegeClass;
-import com.example.Models.Day;
 import com.example.Models.Exam;
-import com.example.Models.MeetingTime;
 import com.example.Models.Task;
+import com.example.front_end_current.Database;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EditTaskFragment extends Fragment {
 
@@ -37,13 +38,14 @@ public class EditTaskFragment extends Fragment {
     private Spinner collegeClassSpinner;
     private EditText dayEditText;
     private EditText monthEditText;
+    private Button saveTaskButton;
+    private Button clearTaskButton;
 
-    private List<CollegeClass> collegeClasses;
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
+
+        Log.d("Bro","Reached edit task.");
 
         taskTypeSpinner = view.findViewById(R.id.taskTypeSpinner);
         taskDescriptionEditText = view.findViewById(R.id.taskDescriptionEditText);
@@ -52,13 +54,21 @@ public class EditTaskFragment extends Fragment {
         collegeClassSpinner = view.findViewById(R.id.collegeClassSpinner);
         dayEditText = view.findViewById(R.id.dayEditText);
         monthEditText = view.findViewById(R.id.monthEditText);
+        saveTaskButton = view.findViewById(R.id.saveTaskButton);
+        clearTaskButton = view.findViewById(R.id.clearTaskButton);
 
         setupCollegeClassSpinner(collegeClassSpinner);
         setupTaskTypeSpinner();
 
-        // Retrieve task details and pre-fill form fields for editing
         Task task = (Task) getArguments().getSerializable("task");
         preFillTaskDetails(task);
+
+        saveTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveTask(task.getId());
+            }
+        });
 
         return view;
     }
@@ -96,10 +106,12 @@ public class EditTaskFragment extends Fragment {
 
         // Hide all fields initially
         endTimeEditText.setVisibility(View.GONE);
+        collegeClassSpinner.setVisibility(View.GONE);
 
         // Show the relevant field based on the selected type
-        if ("Exam".equals(selectedType)) {
+        if ("Exam".equals(selectedType) || "Assignment".equals(selectedType)) {
             endTimeEditText.setVisibility(View.VISIBLE);
+            collegeClassSpinner.setVisibility(View.VISIBLE);
         }
     }
 
@@ -151,21 +163,21 @@ public class EditTaskFragment extends Fragment {
         }
     }
 
-
-    private void saveTask() {
+    private void saveTask(UUID id) {
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
         String startTime = startTimeEditText.getText().toString().trim();
         int day = Integer.parseInt(dayEditText.getText().toString().trim());
         int month = Integer.parseInt(monthEditText.getText().toString().trim());
-        CollegeClass selectedCollegeClass = collegeClasses.get(collegeClassSpinner.getSelectedItemPosition());
 
         // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
 
         Task task;
         if (taskType.equals("Assignment")) {
+            CollegeClass selectedCollegeClass = Database.DATABASE.getAllClasses().get(collegeClassSpinner.getSelectedItemPosition());
             task = new Assignment(selectedCollegeClass, startTime, taskDescription, month, day);
         } else if (taskType.equals("Exam")) {
+            CollegeClass selectedCollegeClass = Database.DATABASE.getAllClasses().get(collegeClassSpinner.getSelectedItemPosition());
             String endTime = endTimeEditText.getText().toString().trim();
             task = new Exam(selectedCollegeClass, startTime, endTime, taskDescription, month, day);
         } else {
@@ -173,12 +185,11 @@ public class EditTaskFragment extends Fragment {
         }
 
         // Save the updated task to the database
-        Database.DATABASE.updateTaskByUUID(task.getId(), task);
+        Database.DATABASE.updateTaskByUUID(id, task);
         Toast.makeText(requireContext(), "Task updated successfully", Toast.LENGTH_SHORT).show();
 
         // Navigate back to previous fragment
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }
-
 }

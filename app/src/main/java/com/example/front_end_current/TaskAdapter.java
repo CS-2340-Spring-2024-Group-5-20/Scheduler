@@ -80,7 +80,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         // Pass the fragment to the activity
         if (fragmentChangeListener != null) {
             fragmentChangeListener.changeFragment(editTaskFragment);
-            Log.d("Log", "Clicked on editable element");
+            Log.d("Log", "Clicked on editable element 2, task " + task.getDescription());
         }
     }
 

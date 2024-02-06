@@ -17,7 +17,6 @@ import com.example.Models.CollegeClass;
 import com.example.Models.Day;
 import com.example.Models.Task;
 import com.example.Models.ScheduleManager;
-import com.example.front_end_current.CollegeClassAdapter;
 import com.example.front_end_current.ScheduleManagerLogger;
 
 import java.util.ArrayList;
@@ -78,8 +77,11 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
     public void changeFragment(Fragment fragment) {
-        // You can implement fragment navigation logic here if needed
+        // Replace the current fragment with the new fragment
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
