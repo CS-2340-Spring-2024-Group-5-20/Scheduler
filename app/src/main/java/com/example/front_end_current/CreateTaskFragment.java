@@ -146,8 +146,7 @@ public class CreateTaskFragment extends Fragment {
             endTime = "";
         }
 
-        if (TextUtils.isEmpty(taskDescription) || TextUtils.isEmpty(startTime) ||
-                TextUtils.isEmpty(endTime) || TextUtils.isEmpty(dayEditText.getText().toString()) ||
+        if (taskDescription.isEmpty() || startTime.isEmpty() || TextUtils.isEmpty(dayEditText.getText().toString()) ||
                 TextUtils.isEmpty(String.valueOf(monthEditText.getText().toString()))) {
             Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
