@@ -109,32 +109,59 @@ public class ScheduleManager {
     }
 
     public void updateCourseByUUID(UUID id, CollegeClass toUpdate) {
+        List<CollegeClass> allClasses = getAllClasses();
+        Day oldDay = null;
+        for (int i = 0; i < allClasses.size(); i++)
+        {
+            if (allClasses.get(i).getUUID().equals(id)) {
+                oldDay = allClasses.get(i).getMeetingTime().getMeetDay();
+            }
+        }
+        if (oldDay == null) {
+            return;
+        } else {
+            switch (oldDay) {
+                case Monday:
+                    removeClass(mondayClasses, id);
+                    break;
+                case Tuesday:
+                    removeClass(tuesdayClasses, id);
+                    break;
+                case Wednesday:
+                    removeClass(wednesdayClasses, id);
+                    break;
+                case Thursday:
+                    removeClass(thursdayClasses, id);
+                    break;
+                case Friday:
+                    removeClass(fridayClasses, id);
+                    break;
+            }
+        }
+
         switch (toUpdate.getMeetingTime().getMeetDay()) {
             case Monday:
-                updateCourseToDayByUUID(id, mondayClasses, toUpdate);
+                mondayClasses.add(toUpdate);
                 break;
             case Tuesday:
-                updateCourseToDayByUUID(id, tuesdayClasses, toUpdate);
+                tuesdayClasses.add(toUpdate);
                 break;
             case Wednesday:
-                updateCourseToDayByUUID(id, wednesdayClasses, toUpdate);
+                wednesdayClasses.add(toUpdate);
                 break;
             case Thursday:
-                updateCourseToDayByUUID(id, thursdayClasses, toUpdate);
+                thursdayClasses.add(toUpdate);
                 break;
             case Friday:
-                updateCourseToDayByUUID(id, fridayClasses, toUpdate);
+                fridayClasses.add(toUpdate);
                 break;
         }
     }
 
-    public void updateCourseToDayByUUID(UUID id, List<CollegeClass> dayClasses, CollegeClass toUpdate) {
+    private void removeClass(List<CollegeClass> dayClasses, UUID id) {
         for (int i = 0; i < dayClasses.size(); i++) {
-            CollegeClass course = dayClasses.get(i);
-            if (course.getUUID().equals(id)) {
-                dayClasses.set(i, toUpdate);
-                Log.d("ScheduleManager", "Course updated: " + toUpdate.getClassTitle());
-                break;
+            if (dayClasses.get(i).getUUID().equals(id)) {
+                dayClasses.remove(i);
             }
         }
     }
@@ -165,5 +192,61 @@ public class ScheduleManager {
                 break; // Exit the loop once the task is updated
             }
         }
+    }
+
+    public void deleteTaskByUUID(UUID id) {
+        Iterator<Task> iterator = academicTasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getId().equals(id)) {
+                iterator.remove();
+                Log.d("ScheduleManager", "Task deleted: " + task.getDescription());
+                break;
+            }
+        }
+    }
+
+    public void deleteClassByUUID(UUID id) {
+        deleteClassFromDayByUUID(id, mondayClasses);
+        deleteClassFromDayByUUID(id, tuesdayClasses);
+        deleteClassFromDayByUUID(id, wednesdayClasses);
+        deleteClassFromDayByUUID(id, thursdayClasses);
+        deleteClassFromDayByUUID(id, fridayClasses);
+    }
+
+    private void deleteClassFromDayByUUID(UUID id, List<CollegeClass> dayClasses) {
+        Iterator<CollegeClass> iterator = dayClasses.iterator();
+        while (iterator.hasNext()) {
+            CollegeClass course = iterator.next();
+            if (course.getUUID().equals(id)) {
+                iterator.remove();
+                Log.d("ScheduleManager", "Course deleted: " + course.getClassTitle());
+                break;
+            }
+        }
+    }
+
+    // Method to get a CollegeClass object by its name from all ArrayLists
+    public CollegeClass getCollegeClassByName(String className) {
+        List<List<CollegeClass>> allDayClasses = new ArrayList<>();
+        allDayClasses.add(mondayClasses);
+        allDayClasses.add(tuesdayClasses);
+        allDayClasses.add(wednesdayClasses);
+        allDayClasses.add(thursdayClasses);
+        allDayClasses.add(fridayClasses);
+
+        // Iterate through each ArrayList of CollegeClass objects
+        for (List<CollegeClass> dayClasses : allDayClasses) {
+            // Iterate through the list of CollegeClass objects for the current day
+            for (CollegeClass collegeClass : dayClasses) {
+                // Compare the names ignoring case
+                if (collegeClass.getClassTitle().equalsIgnoreCase(className)) {
+                    // Return the CollegeClass object if the names match
+                    return collegeClass;
+                }
+            }
+        }
+        // Return null if no matching CollegeClass is found
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.front_end_current;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ public class EditTaskFragment extends Fragment {
     private EditText dayEditText;
     private EditText monthEditText;
     private Button saveTaskButton;
-    private Button clearTaskButton;
+    private Button deleteTaskButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class EditTaskFragment extends Fragment {
         dayEditText = view.findViewById(R.id.dayEditText);
         monthEditText = view.findViewById(R.id.monthEditText);
         saveTaskButton = view.findViewById(R.id.saveTaskButton);
-        clearTaskButton = view.findViewById(R.id.clearTaskButton);
+        deleteTaskButton = view.findViewById(R.id.deleteTaskButton);
 
         setupCollegeClassSpinner(collegeClassSpinner);
         setupTaskTypeSpinner();
@@ -68,6 +69,11 @@ public class EditTaskFragment extends Fragment {
             public void onClick(View v) {
                 saveTask(task.getId());
             }
+        });
+
+        deleteTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { deleteTask(task.getId()); }
         });
 
         return view;
@@ -172,6 +178,12 @@ public class EditTaskFragment extends Fragment {
         // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
 
+        if (taskDescription.isEmpty() || startTime.isEmpty() || taskType.isEmpty() || taskType.isEmpty() ||
+            dayEditText.getText().toString().isEmpty() || monthEditText.getText().toString().isEmpty()) {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Task task;
         if (taskType.equals("Assignment")) {
             CollegeClass selectedCollegeClass = Database.DATABASE.getAllClasses().get(collegeClassSpinner.getSelectedItemPosition());
@@ -187,6 +199,15 @@ public class EditTaskFragment extends Fragment {
         // Save the updated task to the database
         Database.DATABASE.updateTaskByUUID(id, task);
         Toast.makeText(requireContext(), "Task updated successfully", Toast.LENGTH_SHORT).show();
+
+        // Navigate back to previous fragment
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
+    private void deleteTask(UUID id) {
+        Database.DATABASE.deleteTaskByUUID(id);
+        Toast.makeText(requireContext(), "Task deleted successfully", Toast.LENGTH_SHORT).show();
 
         // Navigate back to previous fragment
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

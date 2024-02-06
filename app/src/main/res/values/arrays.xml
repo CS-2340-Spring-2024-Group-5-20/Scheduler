@@ -17,4 +17,10 @@
         <item>Class</item>
         <item>Task</item>
     </string-array>
+    <string-array name="sorting_options">
+        <item>By Task</item>
+        <item>By Exam</item>
+        <item>By Assignment</item>
+        <item>By All</item>
+    </string-array>
 </resources>

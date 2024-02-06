@@ -26,7 +26,6 @@
         app:fabCradleRoundedCornerRadius="50dp"
         tools:visibility="visible" />
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
@@ -45,8 +44,5 @@
             android:src="@drawable/add"
             app:maxImageSize="40dp" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

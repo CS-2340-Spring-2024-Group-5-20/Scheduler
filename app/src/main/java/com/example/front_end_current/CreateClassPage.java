@@ -86,6 +86,13 @@ public class CreateClassPage extends Fragment {
             }
         });
 
+        clearClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAllFields();
+            }
+        });
+
         return view;
     }
 
@@ -105,7 +112,7 @@ public class CreateClassPage extends Fragment {
         if (className.isEmpty() || professorName.isEmpty() || section.isEmpty()
             || location.isEmpty() || room.isEmpty() || dayOfWeek.isEmpty()
             || start.isEmpty() || end.isEmpty() ) {
-            Toast.makeText(requireContext(), "Please enter event details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Please enter class details", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -119,9 +126,26 @@ public class CreateClassPage extends Fragment {
             Database.DATABASE.addCourseToSchedule(collegeClass);
         }
 
-        Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Class saved successfully", Toast.LENGTH_SHORT).show();
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
+    }
+
+    private void clearAllFields() {
+        // Clear TextInputEditText fields
+        classNameEditText.setText("");
+        professorNameEditText.setText("");
+        sectionEditText.setText("");
+        locationEditText.setText("");
+        roomEditText.setText("");
+        startEditText.setText("");
+        endEditText.setText("");
+
+        // Clear MaterialAutoCompleteTextView field
+        dayOfWeekSpinner.setText(""); // Clear text in the dropdown
+
+        // Optionally, you can clear the selected item in the dropdown
+        dayOfWeekSpinner.clearListSelection();
     }
 }

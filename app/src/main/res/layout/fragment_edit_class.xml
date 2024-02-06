@@ -212,11 +212,11 @@
                 app:layout_constraintStart_toEndOf="@+id/startEditLayout" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/clearClassButton"
+                android:id="@+id/deleteClassButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:text="@string/clear_all_string"
+                android:text="Delete"
                 android:textColor="@color/black"
                 android:backgroundTint="#DEDEDE"
                 android:background="@drawable/reminder_box"

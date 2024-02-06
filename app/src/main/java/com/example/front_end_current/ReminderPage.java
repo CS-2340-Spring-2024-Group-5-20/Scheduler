@@ -1,41 +1,45 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.Models.CollegeClass;
-import com.example.Models.Day;
+// Models
+import com.example.Models.Assignment;
+import com.example.Models.Exam;
 import com.example.Models.Task;
-import com.example.Models.ScheduleManager;
-import com.example.front_end_current.ScheduleManagerLogger;
 
+// Java
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;import com.example.front_end_current.TaskAdapter;
+import java.util.List;
 
+/**
+ * ReminderPage class for the fragment holding the task recycler view.
+ */
 public class ReminderPage extends Fragment implements TaskAdapter.FragmentChangeListener {
 
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private List<Task> tasks;
+    private Button filter;
+    private Spinner sortingSpinner;
 
-    public ReminderPage() {
-        // Required empty public constructor
-    }
-
-    public static ReminderPage newInstance() {
-        return new ReminderPage();
-    }
+    /**
+     * Required empty public constructor.
+     */
+    public ReminderPage() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,14 +52,31 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         adapter.setFragmentChangeListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
 
+        sortingSpinner = rootView.findViewById(R.id.sortingSpinner);
+        filter = rootView.findViewById(R.id.filterButton);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortTasks();
+            }
+        });
+
         loadTasks();
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.sorting_options, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortingSpinner.setAdapter(spinnerAdapter);
 
         return rootView;
     }
 
+    /**
+     * Helper method to load the tasks from the database instance
+     */
     private void loadTasks() {
         tasks.clear();
 
@@ -72,13 +93,53 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         adapter.notifyDataSetChanged();
     }
 
+    private void sortTasks() {
+        String selectedOption = sortingSpinner.getSelectedItem().toString();
+
+        List<Task> exams = new ArrayList<Task>();
+        List<Task> assignments = new ArrayList<Task>();
+        List<Task> new_tasks = new ArrayList<Task>();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i) instanceof Exam) {
+                exams.add((Exam) tasks.get(i));
+            } else if (tasks.get(i) instanceof Assignment) {
+                assignments.add((Assignment) tasks.get(i));
+            } else {
+                new_tasks.add(tasks.get(i));
+            }
+        }
+
+        switch (selectedOption) {
+            case "By Exam":
+                tasks = exams;
+                break;
+            case "By Assignment":
+                tasks = assignments;
+                break;
+            case "By Task":
+                tasks = new_tasks;
+                break;
+            case "By All":
+                tasks.clear();
+                tasks.addAll(exams);
+                tasks.addAll(assignments);
+                tasks.addAll(new_tasks);
+                break;
+        }
+
+        adapter.updateTasks(tasks);
+
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
     public void changeFragment(Fragment fragment) {
-        // Replace the current fragment with the new fragment
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, fragment)
                 .addToBackStack(null)

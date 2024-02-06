@@ -31,7 +31,7 @@ public class EditClassFragment extends Fragment {
     private TextInputEditText startEditText;
     private TextInputEditText endEditText;
     private Button saveClassButton;
-    private Button clearClassButton;
+    private Button deleteClassButton;
     public EditClassFragment() {
         // Required empty public constructor
     }
@@ -58,7 +58,7 @@ public class EditClassFragment extends Fragment {
         startEditText = view.findViewById(R.id.startEditText);
         endEditText = view.findViewById(R.id.endEditText);
         saveClassButton = view.findViewById(R.id.saveClassButton);
-        clearClassButton = view.findViewById(R.id.clearClassButton);
+        deleteClassButton = view.findViewById(R.id.deleteClassButton);
 
         // Get the CollegeClass object from arguments
         CollegeClass collegeClass = (CollegeClass) getArguments().getSerializable("collegeClass");
@@ -69,7 +69,7 @@ public class EditClassFragment extends Fragment {
         sectionEditText.setText(collegeClass.getClassSection());
         locationEditText.setText(collegeClass.getLocation());
         roomEditText.setText(collegeClass.getRoomNumber());
-        dayOfWeekSpinner.setText(collegeClass.getMeetingTime().getMeetDay().toString());
+        // dayOfWeekSpinner.setSelection(collegeClass.getMeetingTime().getMeetDay().ordinal());
         startEditText.setText(collegeClass.getMeetingTime().getStartTime());
         endEditText.setText(collegeClass.getMeetingTime().getEndTime());
 
@@ -79,6 +79,12 @@ public class EditClassFragment extends Fragment {
             public void onClick(View v) {
                 // Save changes and navigate back to previous fragment
                 saveClass(collegeClass.getUUID());
+            }
+        });
+
+        deleteClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {deleteClass(collegeClass.getUUID());
             }
         });
 
@@ -119,6 +125,15 @@ public class EditClassFragment extends Fragment {
         Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
 
         // navigate back to schedule fragment
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
+    private void deleteClass(UUID id) {
+        Database.DATABASE.deleteClassByUUID(id);
+        Toast.makeText(requireContext(), "Class deleted successfully", Toast.LENGTH_SHORT).show();
+
+        // Navigate back to previous fragment
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }

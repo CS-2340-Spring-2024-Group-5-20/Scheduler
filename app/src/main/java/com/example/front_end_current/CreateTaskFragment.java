@@ -1,6 +1,7 @@
 package com.example.front_end_current;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,13 @@ public class CreateTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveTask();
+            }
+        });
+
+        clearTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearTaskFields();
             }
         });
 
@@ -131,13 +139,30 @@ public class CreateTaskFragment extends Fragment {
     private void saveTask() {
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
         String startTime = startTimeEditText.getText().toString().trim();
-        String endTime = endTimeEditText.getText().toString().trim();
+        String endTime;
+        if (endTimeEditText.getText() != null) {
+            endTime = endTimeEditText.getText().toString().trim();
+        } else {
+            endTime = "";
+        }
+
+        if (taskDescription.isEmpty() || startTime.isEmpty() || TextUtils.isEmpty(dayEditText.getText().toString()) ||
+                TextUtils.isEmpty(String.valueOf(monthEditText.getText().toString()))) {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         int day = Integer.valueOf(dayEditText.getText().toString().trim());
         int month= Integer.valueOf(monthEditText.getText().toString().trim());
-        CollegeClass selectedCollegeClass = (CollegeClass) collegeClassSpinner.getSelectedItem();
 
         // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
+
+        CollegeClass selectedCollegeClass = null;
+
+        if (taskType.equals("Exam") || taskType.equals("Assignment")) {
+            selectedCollegeClass = (CollegeClass) Database.DATABASE.getCollegeClassByName(collegeClassSpinner.getSelectedItem().toString());
+        }
 
         Task task;
         if (taskType.equals("Assignment")) {
@@ -156,4 +181,18 @@ public class CreateTaskFragment extends Fragment {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }
+
+    private void clearTaskFields() {
+        // Clear EditText fields
+        taskDescriptionEditText.setText("");
+        startTimeEditText.setText("");
+        endTimeEditText.setText("");
+        dayEditText.setText("");
+        monthEditText.setText("");
+
+        // Clear Spinner fields
+        taskTypeSpinner.setSelection(0); // Set to default selection
+        collegeClassSpinner.setSelection(0); // Set to default selection
+    }
+
 }
