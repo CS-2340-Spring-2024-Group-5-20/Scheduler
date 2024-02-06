@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +23,14 @@ import com.example.Models.*;
 public class CreateTaskFragment extends Fragment {
 
     private Spinner taskTypeSpinner;
-    private EditText taskNameEditText;
     private EditText taskDescriptionEditText;
     private EditText startTimeEditText;
     private EditText endTimeEditText;
     private Spinner collegeClassSpinner;
-
-    private List<CollegeClass> collegeClasses;
     private EditText dayEditText;
     private EditText monthEditText;
+    private Button saveTaskButton;
+    private Button clearTaskButton;
 
     @Nullable
     @Override
@@ -36,16 +38,24 @@ public class CreateTaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.create_task_page, container, false);
 
         taskTypeSpinner = view.findViewById(R.id.taskTypeSpinner);
-        taskNameEditText = view.findViewById(R.id.taskNameEditText);
         taskDescriptionEditText = view.findViewById(R.id.taskDescriptionEditText);
         startTimeEditText = view.findViewById(R.id.startTimeEditText);
         endTimeEditText = view.findViewById(R.id.endTimeEditText);
         collegeClassSpinner = view.findViewById(R.id.collegeClassSpinner);
         dayEditText = view.findViewById(R.id.dayEditText);
         monthEditText = view.findViewById(R.id.monthEditText);
+        saveTaskButton = view.findViewById(R.id.saveTaskButton);
+        clearTaskButton = view.findViewById(R.id.clearTaskButton);
 
         setupCollegeClassSpinner(collegeClassSpinner);
         setupTaskTypeSpinner();
+
+        saveTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveTask();
+            }
+        });
 
         return view;
     }
@@ -117,14 +127,8 @@ public class CreateTaskFragment extends Fragment {
         }
     }
 
-    // Method to set college classes list
-    public void setCollegeClasses(List<CollegeClass> collegeClasses) {
-        this.collegeClasses = collegeClasses;
-    }
-
     // Method to get task data and save it
     private void saveTask() {
-        String taskName = taskNameEditText.getText().toString().trim();
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
         String startTime = startTimeEditText.getText().toString().trim();
         String endTime = endTimeEditText.getText().toString().trim();
@@ -146,5 +150,10 @@ public class CreateTaskFragment extends Fragment {
 
         // Save the task to the database
         Database.DATABASE.addTaskToSchedule(task);
+
+        Toast.makeText(requireContext(), "Task saved successfully", Toast.LENGTH_SHORT).show();
+
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.popBackStack();
     }
 }

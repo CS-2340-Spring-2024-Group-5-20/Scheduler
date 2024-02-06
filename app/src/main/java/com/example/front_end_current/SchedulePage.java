@@ -31,9 +31,8 @@ public class SchedulePage extends Fragment  implements CollegeClassAdapter.Fragm
         // Required empty public constructor
     }
 
-    public static SchedulePage newInstance(String param1, String param2) {
-        SchedulePage fragment = new SchedulePage();
-        return fragment;
+    public static SchedulePage newInstance() {
+        return new SchedulePage();
     }
 
     @Override

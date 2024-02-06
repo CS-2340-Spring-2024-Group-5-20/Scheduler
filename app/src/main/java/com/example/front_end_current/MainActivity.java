@@ -61,8 +61,8 @@ public final class MainActivity extends AppCompatActivity implements CollegeClas
                 );
             }
         });
-        SchedulePage schedulePage = new SchedulePage();
-        changeTheFragment(schedulePage);
+        ReminderPage reminderPage = new ReminderPage();
+        changeTheFragment(reminderPage);
     }
 
     private void changeTheFragment(Fragment fragment) {
