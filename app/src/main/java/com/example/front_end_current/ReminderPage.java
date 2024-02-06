@@ -2,9 +2,13 @@ package com.example.front_end_current;
 
 // Android
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -13,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 // Models
+import com.example.Models.Assignment;
+import com.example.Models.Exam;
 import com.example.Models.Task;
 
 // Java
@@ -27,6 +33,8 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private List<Task> tasks;
+    private Button filter;
+    private Spinner sortingSpinner;
 
     /**
      * Required empty public constructor.
@@ -46,7 +54,22 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        sortingSpinner = rootView.findViewById(R.id.sortingSpinner);
+        filter = rootView.findViewById(R.id.filterButton);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortTasks();
+            }
+        });
+
         loadTasks();
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.sorting_options, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortingSpinner.setAdapter(spinnerAdapter);
 
         return rootView;
     }
@@ -66,6 +89,46 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         } else {
             Toast.makeText(getContext(), "Database not initialized", Toast.LENGTH_SHORT).show();
         }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortTasks() {
+        String selectedOption = sortingSpinner.getSelectedItem().toString();
+
+        List<Task> exams = new ArrayList<Task>();
+        List<Task> assignments = new ArrayList<Task>();
+        List<Task> new_tasks = new ArrayList<Task>();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i) instanceof Exam) {
+                exams.add((Exam) tasks.get(i));
+            } else if (tasks.get(i) instanceof Assignment) {
+                assignments.add((Assignment) tasks.get(i));
+            } else {
+                new_tasks.add(tasks.get(i));
+            }
+        }
+
+        switch (selectedOption) {
+            case "By Exam":
+                tasks = exams;
+                break;
+            case "By Assignment":
+                tasks = assignments;
+                break;
+            case "By Task":
+                tasks = new_tasks;
+                break;
+            case "By All":
+                tasks.clear();
+                tasks.addAll(exams);
+                tasks.addAll(assignments);
+                tasks.addAll(new_tasks);
+                break;
+        }
+
+        adapter.updateTasks(tasks);
 
         adapter.notifyDataSetChanged();
     }

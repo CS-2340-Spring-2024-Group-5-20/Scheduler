@@ -104,6 +104,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
+    public void updateTasks(List<Task> updatedTasks) {
+        tasks.clear();
+        tasks.addAll(updatedTasks);
+        notifyDataSetChanged();
+    }
+
     /**
      * Internal view holder class to manage the recycler view
      */
