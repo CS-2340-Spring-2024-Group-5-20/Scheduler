@@ -138,13 +138,23 @@ public class CreateTaskFragment extends Fragment {
     private void saveTask() {
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
         String startTime = startTimeEditText.getText().toString().trim();
-        String endTime = endTimeEditText.getText().toString().trim();
+        String endTime;
+        if (endTimeEditText.getText() != null) {
+            endTime = endTimeEditText.getText().toString().trim();
+        } else {
+            endTime = "";
+        }
         int day = Integer.valueOf(dayEditText.getText().toString().trim());
         int month= Integer.valueOf(monthEditText.getText().toString().trim());
-        CollegeClass selectedCollegeClass = (CollegeClass) Database.DATABASE.getCollegeClassByName(collegeClassSpinner.getSelectedItem().toString());
 
         // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
+
+        CollegeClass selectedCollegeClass = null;
+
+        if (taskType.equals("Exam") || taskType.equals("Assignment")) {
+            selectedCollegeClass = (CollegeClass) Database.DATABASE.getCollegeClassByName(collegeClassSpinner.getSelectedItem().toString());
+        }
 
         Task task;
         if (taskType.equals("Assignment")) {
