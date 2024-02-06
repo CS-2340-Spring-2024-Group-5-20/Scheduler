@@ -107,13 +107,20 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Save Button -->
     <Button
         android:id="@+id/saveTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Task"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/monthEditLayout" />
+
+    <Button
+        android:id="@+id/deleteTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        app:layout_constraintEnd_toStartOf="@id/saveTaskButton"
         app:layout_constraintTop_toBottomOf="@id/monthEditLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

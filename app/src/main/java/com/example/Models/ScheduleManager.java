@@ -166,4 +166,36 @@ public class ScheduleManager {
             }
         }
     }
+
+    public void deleteTaskByUUID(UUID id) {
+        Iterator<Task> iterator = academicTasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getId().equals(id)) {
+                iterator.remove();
+                Log.d("ScheduleManager", "Task deleted: " + task.getDescription());
+                break;
+            }
+        }
+    }
+
+    public void deleteClassByUUID(UUID id) {
+        deleteClassFromDayByUUID(id, mondayClasses);
+        deleteClassFromDayByUUID(id, tuesdayClasses);
+        deleteClassFromDayByUUID(id, wednesdayClasses);
+        deleteClassFromDayByUUID(id, thursdayClasses);
+        deleteClassFromDayByUUID(id, fridayClasses);
+    }
+
+    private void deleteClassFromDayByUUID(UUID id, List<CollegeClass> dayClasses) {
+        Iterator<CollegeClass> iterator = dayClasses.iterator();
+        while (iterator.hasNext()) {
+            CollegeClass course = iterator.next();
+            if (course.getUUID().equals(id)) {
+                iterator.remove();
+                Log.d("ScheduleManager", "Course deleted: " + course.getClassTitle());
+                break;
+            }
+        }
+    }
 }
