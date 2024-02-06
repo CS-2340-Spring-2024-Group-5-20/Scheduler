@@ -1,64 +1,87 @@
 package com.example.front_end_current;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+import androidx.annotation.Nullable;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ReminderPage#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ReminderPage extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import com.example.Models.CollegeClass;
+import com.example.Models.Day;
+import com.example.Models.Task;
+import com.example.Models.ScheduleManager;
+import com.example.front_end_current.ScheduleManagerLogger;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;import com.example.front_end_current.TaskAdapter;
+
+public class ReminderPage extends Fragment implements TaskAdapter.FragmentChangeListener {
+
+    private RecyclerView recyclerView;
+    private TaskAdapter adapter;
+    private List<Task> tasks;
 
     public ReminderPage() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment reminderpage.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ReminderPage newInstance(String param1, String param2) {
-        ReminderPage fragment = new ReminderPage();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public static ReminderPage newInstance() {
+        return new ReminderPage();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reminderpage, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_reminderpage, container, false);
+
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        tasks = new ArrayList<>();
+        adapter = new TaskAdapter(tasks);
+        adapter.setFragmentChangeListener(this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapter);
+
+        loadTasks();
+
+        return rootView;
+    }
+
+    private void loadTasks() {
+        tasks.clear();
+
+        if (Database.DATABASE != null) {
+            List<Task> academicTasks = Database.DATABASE.academicTasks;
+
+            if (academicTasks != null) {
+                tasks.addAll(academicTasks);
+            }
+        } else {
+            Toast.makeText(getContext(), "Database not initialized", Toast.LENGTH_SHORT).show();
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void changeFragment(Fragment fragment) {
+        // Replace the current fragment with the new fragment
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

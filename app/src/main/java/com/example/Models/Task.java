@@ -5,12 +5,14 @@ import android.graphics.Color;
 import java.util.Random;
 import java.util.UUID;
 
+import java.io.Serializable;
+
 /**
  * This class will pertain to Tasks. Each task will have it's own UUID, its own String designated for time, and a
  * string designated for a description.
  * The integer fields for month and day of month exist for sorting purposes.
  */
-public class Task implements Comparable<Task> {
+public class Task implements Comparable<Task>, Serializable {
     public UUID id;
     public String time;
     public String description;

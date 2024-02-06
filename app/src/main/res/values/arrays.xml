@@ -13,4 +13,8 @@
         <item>Exam</item>
         <item>Assignment</item>
     </string-array>
+    <string-array name="dropdown_options">
+        <item>Class</item>
+        <item>Task</item>
+    </string-array>
 </resources>

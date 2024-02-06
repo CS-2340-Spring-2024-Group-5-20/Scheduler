@@ -156,4 +156,14 @@ public class ScheduleManager {
 
         return allClasses;
     }
+    public void updateTaskByUUID(UUID id, Task task) {
+        for (int i = 0; i < academicTasks.size(); i++) {
+            Task t = academicTasks.get(i);
+            if (t.getId().equals(id)) {
+                // Update the task with the new task object
+                academicTasks.set(i, task);
+                break; // Exit the loop once the task is updated
+            }
+        }
+    }
 }
