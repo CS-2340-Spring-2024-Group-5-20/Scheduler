@@ -3,8 +3,10 @@ package com.example.Models;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -133,6 +135,34 @@ public class ScheduleManager {
                 dayClasses.set(i, toUpdate);
                 Log.d("ScheduleManager", "Course updated: " + toUpdate.getClassTitle());
                 break;
+            }
+        }
+    }
+
+    public ArrayList<CollegeClass> getAllClasses() {
+        ArrayList<CollegeClass> allClasses = new ArrayList<>();
+
+        // Add classes from Monday to Friday
+        allClasses.addAll(mondayClasses);
+        allClasses.addAll(tuesdayClasses);
+        allClasses.addAll(wednesdayClasses);
+        allClasses.addAll(thursdayClasses);
+        allClasses.addAll(fridayClasses);
+
+        // Remove duplicates (if any)
+        Set<CollegeClass> set = new HashSet<>(allClasses);
+        allClasses.clear();
+        allClasses.addAll(set);
+
+        return allClasses;
+    }
+    public void updateTaskByUUID(UUID id, Task task) {
+        for (int i = 0; i < academicTasks.size(); i++) {
+            Task t = academicTasks.get(i);
+            if (t.getId().equals(id)) {
+                // Update the task with the new task object
+                academicTasks.set(i, task);
+                break; // Exit the loop once the task is updated
             }
         }
     }

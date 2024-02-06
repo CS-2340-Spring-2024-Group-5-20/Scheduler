@@ -14,7 +14,6 @@
 
     </FrameLayout>
 
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -39,16 +38,32 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="TODO" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ReminderActivity">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/textView"
-        android:layout_width="214dp"
+        android:layout_width="188dp"
         android:layout_height="144dp"
-        android:text="@string/reminders_text"
+        android:text="Reminders"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -57,7 +72,5 @@
         android:textStyle="bold"
         app:layout_anchor="@+id/frame_layout"
         app:layout_anchorGravity="bottom|left" />
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
