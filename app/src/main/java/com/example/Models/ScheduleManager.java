@@ -109,32 +109,59 @@ public class ScheduleManager {
     }
 
     public void updateCourseByUUID(UUID id, CollegeClass toUpdate) {
+        List<CollegeClass> allClasses = getAllClasses();
+        Day oldDay = null;
+        for (int i = 0; i < allClasses.size(); i++)
+        {
+            if (allClasses.get(i).getUUID().equals(id)) {
+                oldDay = allClasses.get(i).getMeetingTime().getMeetDay();
+            }
+        }
+        if (oldDay == null) {
+            return;
+        } else {
+            switch (oldDay) {
+                case Monday:
+                    removeClass(mondayClasses, id);
+                    break;
+                case Tuesday:
+                    removeClass(tuesdayClasses, id);
+                    break;
+                case Wednesday:
+                    removeClass(wednesdayClasses, id);
+                    break;
+                case Thursday:
+                    removeClass(thursdayClasses, id);
+                    break;
+                case Friday:
+                    removeClass(fridayClasses, id);
+                    break;
+            }
+        }
+
         switch (toUpdate.getMeetingTime().getMeetDay()) {
             case Monday:
-                updateCourseToDayByUUID(id, mondayClasses, toUpdate);
+                mondayClasses.add(toUpdate);
                 break;
             case Tuesday:
-                updateCourseToDayByUUID(id, tuesdayClasses, toUpdate);
+                tuesdayClasses.add(toUpdate);
                 break;
             case Wednesday:
-                updateCourseToDayByUUID(id, wednesdayClasses, toUpdate);
+                wednesdayClasses.add(toUpdate);
                 break;
             case Thursday:
-                updateCourseToDayByUUID(id, thursdayClasses, toUpdate);
+                thursdayClasses.add(toUpdate);
                 break;
             case Friday:
-                updateCourseToDayByUUID(id, fridayClasses, toUpdate);
+                fridayClasses.add(toUpdate);
                 break;
         }
     }
 
-    public void updateCourseToDayByUUID(UUID id, List<CollegeClass> dayClasses, CollegeClass toUpdate) {
+    private void removeClass(List<CollegeClass> dayClasses, UUID id) {
         for (int i = 0; i < dayClasses.size(); i++) {
-            CollegeClass course = dayClasses.get(i);
-            if (course.getUUID().equals(id)) {
-                dayClasses.set(i, toUpdate);
-                Log.d("ScheduleManager", "Course updated: " + toUpdate.getClassTitle());
-                break;
+            if (dayClasses.get(i).getUUID().equals(id)) {
+                dayClasses.remove(i);
             }
         }
     }

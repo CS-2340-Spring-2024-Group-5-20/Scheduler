@@ -1,7 +1,7 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
-import android.service.credentials.CreateCredentialRequest;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +9,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+/**
+ * Fragment class that holds the two create views and allows user to toggle
+ * between them using a frame layout.
+ */
 public class SelectorFragment extends Fragment {
 
     private Spinner dropdownMenu;
@@ -51,6 +54,10 @@ public class SelectorFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Function switching of fragments based on the dropdown menu
+     * @param position of the dropdown menu --> which fragment to switch to
+     */
     private void switchFragment(int position) {
         Fragment fragment;
         switch (position) {

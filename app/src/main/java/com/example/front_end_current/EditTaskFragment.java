@@ -1,6 +1,7 @@
 package com.example.front_end_current;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,6 +177,12 @@ public class EditTaskFragment extends Fragment {
 
         // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
+
+        if (taskDescription.isEmpty() || startTime.isEmpty() || taskType.isEmpty() || taskType.isEmpty() ||
+            dayEditText.getText().toString().isEmpty() || monthEditText.getText().toString().isEmpty()) {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Task task;
         if (taskType.equals("Assignment")) {

@@ -69,7 +69,7 @@ public class EditClassFragment extends Fragment {
         sectionEditText.setText(collegeClass.getClassSection());
         locationEditText.setText(collegeClass.getLocation());
         roomEditText.setText(collegeClass.getRoomNumber());
-        dayOfWeekSpinner.setText(collegeClass.getMeetingTime().getMeetDay().toString());
+        // dayOfWeekSpinner.setSelection(collegeClass.getMeetingTime().getMeetDay().ordinal());
         startEditText.setText(collegeClass.getMeetingTime().getStartTime());
         endEditText.setText(collegeClass.getMeetingTime().getEndTime());
 

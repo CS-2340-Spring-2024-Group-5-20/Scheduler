@@ -1,39 +1,36 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+// Models
 import com.example.Models.CollegeClass;
-import com.example.Models.Day;
-import com.example.Models.MeetingTime;
 import com.example.Models.ScheduleManager;
-import com.example.front_end_current.CollegeClassAdapter;
-import com.example.front_end_current.ScheduleManagerLogger;
 
+// Java
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class SchedulePage that represents the container for the recycle view of class objects.
+ */
 public class SchedulePage extends Fragment  implements CollegeClassAdapter.FragmentChangeListener {
     private RecyclerView recyclerView;
     private CollegeClassAdapter adapter;
     private List<CollegeClass> collegeClasses;
     private ScheduleManagerLogger scheduleManagerLogger;
 
-    public SchedulePage() {
-        // Required empty public constructor
-    }
-
-    public static SchedulePage newInstance() {
-        return new SchedulePage();
-    }
+    /**
+     * Required empty public constructor
+     */
+    public SchedulePage() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +69,10 @@ public class SchedulePage extends Fragment  implements CollegeClassAdapter.Fragm
         }
     }
 
+    /**
+     * Function to load the college classes to be rendered from the database
+     * @param scheduleManager database instance to load from
+     */
     public void loadCollegeClasses(ScheduleManager scheduleManager) {
         collegeClasses.clear();
         collegeClasses.addAll(scheduleManager.mondayClasses);
@@ -84,8 +85,8 @@ public class SchedulePage extends Fragment  implements CollegeClassAdapter.Fragm
         adapter.notifyDataSetChanged();
     }
 
+    @Override
     public void changeFragment(Fragment fragment) {
-        // Replace the current fragment with the new fragment
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, fragment)
                 .addToBackStack(null)

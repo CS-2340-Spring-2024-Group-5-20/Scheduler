@@ -1,41 +1,37 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.Models.CollegeClass;
-import com.example.Models.Day;
+// Models
 import com.example.Models.Task;
-import com.example.Models.ScheduleManager;
-import com.example.front_end_current.ScheduleManagerLogger;
 
+// Java
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;import com.example.front_end_current.TaskAdapter;
+import java.util.List;
 
+/**
+ * ReminderPage class for the fragment holding the task recycler view.
+ */
 public class ReminderPage extends Fragment implements TaskAdapter.FragmentChangeListener {
 
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private List<Task> tasks;
 
-    public ReminderPage() {
-        // Required empty public constructor
-    }
-
-    public static ReminderPage newInstance() {
-        return new ReminderPage();
-    }
+    /**
+     * Required empty public constructor.
+     */
+    public ReminderPage() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +51,9 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         return rootView;
     }
 
+    /**
+     * Helper method to load the tasks from the database instance
+     */
     private void loadTasks() {
         tasks.clear();
 
@@ -76,8 +75,8 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
     public void changeFragment(Fragment fragment) {
-        // Replace the current fragment with the new fragment
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, fragment)
                 .addToBackStack(null)
