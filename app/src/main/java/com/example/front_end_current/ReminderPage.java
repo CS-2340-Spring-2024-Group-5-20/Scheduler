@@ -3,6 +3,7 @@ package com.example.front_end_current;
 // Android
 import android.os.Bundle;
 import android.util.Log;
+import android.util.MonthDisplayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,8 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
 
     private void sortTasks() {
         String selectedOption = sortingSpinner.getSelectedItem().toString();
+
+        tasks = Database.DATABASE.academicTasks;
 
         List<Task> exams = new ArrayList<Task>();
         List<Task> assignments = new ArrayList<Task>();

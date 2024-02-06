@@ -96,16 +96,7 @@ public class ScheduleManager {
      * @param toAdd Task that is to be added.
      */
     public void addTaskToSchedule(Task toAdd){
-        if (academicTasks.size() == 0) {
-            academicTasks.add(toAdd);
-        } else {
-            for (int i = 0; i < academicTasks.size(); i++) {
-                if (academicTasks.get(i).compareTo(toAdd) < 0) {
-                    academicTasks.add(i,toAdd);
-                    break;
-                }
-            }
-        }
+        academicTasks.add(toAdd);
     }
 
     public void updateCourseByUUID(UUID id, CollegeClass toUpdate) {
