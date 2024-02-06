@@ -86,6 +86,13 @@ public class CreateClassPage extends Fragment {
             }
         });
 
+        clearClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAllFields();
+            }
+        });
+
         return view;
     }
 
@@ -123,5 +130,22 @@ public class CreateClassPage extends Fragment {
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
+    }
+
+    private void clearAllFields() {
+        // Clear TextInputEditText fields
+        classNameEditText.setText("");
+        professorNameEditText.setText("");
+        sectionEditText.setText("");
+        locationEditText.setText("");
+        roomEditText.setText("");
+        startEditText.setText("");
+        endEditText.setText("");
+
+        // Clear MaterialAutoCompleteTextView field
+        dayOfWeekSpinner.setText(""); // Clear text in the dropdown
+
+        // Optionally, you can clear the selected item in the dropdown
+        dayOfWeekSpinner.clearListSelection();
     }
 }

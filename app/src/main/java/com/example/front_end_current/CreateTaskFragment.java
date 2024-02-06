@@ -57,6 +57,13 @@ public class CreateTaskFragment extends Fragment {
             }
         });
 
+        clearTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearTaskFields();
+            }
+        });
+
         return view;
     }
 
@@ -156,4 +163,18 @@ public class CreateTaskFragment extends Fragment {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }
+
+    private void clearTaskFields() {
+        // Clear EditText fields
+        taskDescriptionEditText.setText("");
+        startTimeEditText.setText("");
+        endTimeEditText.setText("");
+        dayEditText.setText("");
+        monthEditText.setText("");
+
+        // Clear Spinner fields
+        taskTypeSpinner.setSelection(0); // Set to default selection
+        collegeClassSpinner.setSelection(0); // Set to default selection
+    }
+
 }

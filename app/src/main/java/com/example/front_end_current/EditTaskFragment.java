@@ -39,7 +39,6 @@ public class EditTaskFragment extends Fragment {
     private EditText dayEditText;
     private EditText monthEditText;
     private Button saveTaskButton;
-    private Button clearTaskButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class EditTaskFragment extends Fragment {
         dayEditText = view.findViewById(R.id.dayEditText);
         monthEditText = view.findViewById(R.id.monthEditText);
         saveTaskButton = view.findViewById(R.id.saveTaskButton);
-        clearTaskButton = view.findViewById(R.id.clearTaskButton);
 
         setupCollegeClassSpinner(collegeClassSpinner);
         setupTaskTypeSpinner();

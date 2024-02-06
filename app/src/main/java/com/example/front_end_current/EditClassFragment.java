@@ -31,7 +31,6 @@ public class EditClassFragment extends Fragment {
     private TextInputEditText startEditText;
     private TextInputEditText endEditText;
     private Button saveClassButton;
-    private Button clearClassButton;
     public EditClassFragment() {
         // Required empty public constructor
     }
@@ -58,7 +57,6 @@ public class EditClassFragment extends Fragment {
         startEditText = view.findViewById(R.id.startEditText);
         endEditText = view.findViewById(R.id.endEditText);
         saveClassButton = view.findViewById(R.id.saveClassButton);
-        clearClassButton = view.findViewById(R.id.clearClassButton);
 
         // Get the CollegeClass object from arguments
         CollegeClass collegeClass = (CollegeClass) getArguments().getSerializable("collegeClass");

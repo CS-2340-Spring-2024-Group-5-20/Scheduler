@@ -211,20 +211,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView2"
                 app:layout_constraintStart_toEndOf="@+id/startEditLayout" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/clearClassButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="@string/clear_all_string"
-                android:textColor="@color/black"
-                android:backgroundTint="#DEDEDE"
-                android:background="@drawable/reminder_box"
-                app:layout_constraintBottom_toBottomOf="@+id/saveClassButton"
-                app:layout_constraintEnd_toStartOf="@+id/saveClassButton"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/saveClassButton" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

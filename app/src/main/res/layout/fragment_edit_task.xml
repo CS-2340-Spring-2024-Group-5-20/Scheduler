@@ -116,13 +116,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/monthEditLayout" />
 
-    <!-- Clear Button -->
-    <Button
-        android:id="@+id/clearTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        app:layout_constraintEnd_toStartOf="@id/saveTaskButton"
-        app:layout_constraintTop_toBottomOf="@id/monthEditLayout" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
