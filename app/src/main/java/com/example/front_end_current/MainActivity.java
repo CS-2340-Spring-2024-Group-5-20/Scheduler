@@ -1,33 +1,25 @@
 package com.example.front_end_current;
 
-import android.app.Activity;
+// Android
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.Models.CollegeClass;
-import com.example.Models.Day;
-import com.example.Models.Day.*;
-import com.example.Models.MeetingTime;
-import com.example.Models.ScheduleManager;
-import com.example.front_end_current.R.layout;
 import com.example.front_end_current.databinding.ActivityMainBinding;
-
 import kotlin.Metadata;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * Main activity for project --> runs all related fragments.
+ * We decided to keep most of the fragment logic within the fragments to keep the
+ * main activity lightweight, and to isolate individual fragment logic to each respective fragment.
+ * We also decided to go with fragment based UI instead of multiple
+ * activities because all of the functionality of each component is closely linked, and data needs
+ * to be seamlessly passed and new UI components need to be rendered often with the same data.
+ */
 @Metadata(
     mv = {1, 9, 0},
     k = 1,
@@ -71,6 +63,10 @@ public final class MainActivity extends AppCompatActivity implements TaskAdapter
         transaction.commit();
     }
 
+    /**
+     * Function to bring up the selector fragment when middle button clicked.
+     * Selector fragment holds frame to toggle between add task or add class.
+     */
     private void buttonClicked() {
         changeFragment(new SelectorFragment());
     }

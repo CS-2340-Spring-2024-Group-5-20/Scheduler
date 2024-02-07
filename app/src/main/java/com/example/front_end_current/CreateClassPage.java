@@ -1,10 +1,9 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +12,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+// Models
 import com.example.Models.CollegeClass;
 import com.example.Models.Day;
 import com.example.Models.MeetingTime;
-import com.example.Models.ScheduleManager;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateClassPage#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment that allows user to create a college class.
  */
 public class CreateClassPage extends Fragment {
     private TextInputEditText classNameEditText;
@@ -37,20 +34,10 @@ public class CreateClassPage extends Fragment {
     private Button saveClassButton;
     private Button clearClassButton;
 
-    /*
+    /**
      * Required empty public constructor
      */
     public CreateClassPage() {}
-
-    /**
-     * @return new instance of fragment
-     */
-    public static CreateClassPage newInstance() {
-        CreateClassPage fragment = new CreateClassPage();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +47,6 @@ public class CreateClassPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_class_page, container, false);
 
         classNameEditText = view.findViewById(R.id.classNameEditText);
@@ -132,8 +118,10 @@ public class CreateClassPage extends Fragment {
         fragmentManager.popBackStack();
     }
 
+    /**
+     * Function to clear all fields to blank.
+     */
     private void clearAllFields() {
-        // Clear TextInputEditText fields
         classNameEditText.setText("");
         professorNameEditText.setText("");
         sectionEditText.setText("");
@@ -141,11 +129,7 @@ public class CreateClassPage extends Fragment {
         roomEditText.setText("");
         startEditText.setText("");
         endEditText.setText("");
-
-        // Clear MaterialAutoCompleteTextView field
-        dayOfWeekSpinner.setText(""); // Clear text in the dropdown
-
-        // Optionally, you can clear the selected item in the dropdown
+        dayOfWeekSpinner.setText("");
         dayOfWeekSpinner.clearListSelection();
     }
 }

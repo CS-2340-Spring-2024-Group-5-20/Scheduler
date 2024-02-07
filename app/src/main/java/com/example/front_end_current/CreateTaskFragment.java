@@ -1,5 +1,6 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,15 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+// Java
 import java.util.ArrayList;
 import java.util.List;
 import com.example.Models.*;
+
+/**
+ * Fragment that allows user to add a task
+ */
 public class CreateTaskFragment extends Fragment {
 
     private Spinner taskTypeSpinner;
@@ -68,6 +73,9 @@ public class CreateTaskFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Helper function to pre-populate the task spinner with task types
+     */
     private void setupTaskTypeSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.task_types, android.R.layout.simple_spinner_item);
@@ -87,18 +95,19 @@ public class CreateTaskFragment extends Fragment {
         });
     }
 
+    /**
+     * Helper function to show or hide fields depending on which type of task is desired
+     * @param selectedType type of task to add
+     */
     private void showHideFields(String selectedType) {
-        // Get references to the fields you want to show/hide
         Spinner assignmentField = collegeClassSpinner;
         EditText examField = endTimeEditText;
         //EditText taskField = getView().findViewById(R.id.collegeClassSpinner);
 
-        // Hide all fields initially
         assignmentField.setVisibility(View.GONE);
         examField.setVisibility(View.GONE);
         //taskField.setVisibility(View.GONE);
 
-        // Show the relevant field based on the selected type
         if ("Assignment".equals(selectedType)) {
             assignmentField.setVisibility(View.VISIBLE);
         } else if ("Exam".equals(selectedType)) {
@@ -109,6 +118,10 @@ public class CreateTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Helper function to populate collegeClass spinner with classes in the database
+     * @param collegeClassSpinner to be populated
+     */
     private void setupCollegeClassSpinner(Spinner collegeClassSpinner) {
         if (getContext() != null) {
             List<CollegeClass> collegeClasses = Database.DATABASE.getAllClasses();
@@ -135,7 +148,9 @@ public class CreateTaskFragment extends Fragment {
         }
     }
 
-    // Method to get task data and save it
+    /**
+     * Helper function to save a task to the database
+     */
     private void saveTask() {
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
         String startTime = startTimeEditText.getText().toString().trim();
@@ -155,7 +170,6 @@ public class CreateTaskFragment extends Fragment {
         int day = Integer.valueOf(dayEditText.getText().toString().trim());
         int month= Integer.valueOf(monthEditText.getText().toString().trim());
 
-        // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
 
         CollegeClass selectedCollegeClass = null;
@@ -173,7 +187,6 @@ public class CreateTaskFragment extends Fragment {
             task = new Task(startTime, taskDescription, month, day);
         }
 
-        // Save the task to the database
         Database.DATABASE.addTaskToSchedule(task);
 
         Toast.makeText(requireContext(), "Task saved successfully", Toast.LENGTH_SHORT).show();
@@ -182,6 +195,9 @@ public class CreateTaskFragment extends Fragment {
         fragmentManager.popBackStack();
     }
 
+    /**
+     * Clear all function to reset fields to blank
+     */
     private void clearTaskFields() {
         // Clear EditText fields
         taskDescriptionEditText.setText("");
@@ -191,8 +207,8 @@ public class CreateTaskFragment extends Fragment {
         monthEditText.setText("");
 
         // Clear Spinner fields
-        taskTypeSpinner.setSelection(0); // Set to default selection
-        collegeClassSpinner.setSelection(0); // Set to default selection
+        taskTypeSpinner.setSelection(0);
+        collegeClassSpinner.setSelection(0);
     }
 
 }

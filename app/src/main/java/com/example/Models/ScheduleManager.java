@@ -99,6 +99,11 @@ public class ScheduleManager {
         academicTasks.add(toAdd);
     }
 
+    /**
+     * Function to update course by UUID
+     * @param id of course to update
+     * @param toUpdate course to update existing course to
+     */
     public void updateCourseByUUID(UUID id, CollegeClass toUpdate) {
         List<CollegeClass> allClasses = getAllClasses();
         Day oldDay = null;
@@ -149,6 +154,11 @@ public class ScheduleManager {
         }
     }
 
+    /**
+     * Helper to remove a class from an arraylist by id
+     * @param dayClasses to iterate over
+     * @param id of class to remove
+     */
     private void removeClass(List<CollegeClass> dayClasses, UUID id) {
         for (int i = 0; i < dayClasses.size(); i++) {
             if (dayClasses.get(i).getUUID().equals(id)) {
@@ -157,23 +167,31 @@ public class ScheduleManager {
         }
     }
 
+    /**
+     * Function to return all instance data lists as one large list
+     * @return ArrayList of CollegeClass type of all college classes stored by DB
+     */
     public ArrayList<CollegeClass> getAllClasses() {
         ArrayList<CollegeClass> allClasses = new ArrayList<>();
 
-        // Add classes from Monday to Friday
         allClasses.addAll(mondayClasses);
         allClasses.addAll(tuesdayClasses);
         allClasses.addAll(wednesdayClasses);
         allClasses.addAll(thursdayClasses);
         allClasses.addAll(fridayClasses);
 
-        // Remove duplicates (if any)
+        // remove duplicates
         Set<CollegeClass> set = new HashSet<>(allClasses);
         allClasses.clear();
         allClasses.addAll(set);
 
         return allClasses;
     }
+
+    /**
+     * Function to update a task by UUID from instance data list
+     * @param id of task to delete
+     */
     public void updateTaskByUUID(UUID id, Task task) {
         for (int i = 0; i < academicTasks.size(); i++) {
             Task t = academicTasks.get(i);
@@ -185,6 +203,10 @@ public class ScheduleManager {
         }
     }
 
+    /**
+     * Function to delete a task by UUID from instance data list
+     * @param id of task to delete
+     */
     public void deleteTaskByUUID(UUID id) {
         Iterator<Task> iterator = academicTasks.iterator();
         while (iterator.hasNext()) {
@@ -197,6 +219,10 @@ public class ScheduleManager {
         }
     }
 
+    /**
+     * Function to delete a class by UUID from all instance data lists
+     * @param id of class to delete
+     */
     public void deleteClassByUUID(UUID id) {
         deleteClassFromDayByUUID(id, mondayClasses);
         deleteClassFromDayByUUID(id, tuesdayClasses);
@@ -205,6 +231,11 @@ public class ScheduleManager {
         deleteClassFromDayByUUID(id, fridayClasses);
     }
 
+    /**
+     * Function to delete a class from the lists by UUID
+     * @param id of class to find and delete
+     * @param dayClasses list to delete from
+     */
     private void deleteClassFromDayByUUID(UUID id, List<CollegeClass> dayClasses) {
         Iterator<CollegeClass> iterator = dayClasses.iterator();
         while (iterator.hasNext()) {
@@ -217,7 +248,11 @@ public class ScheduleManager {
         }
     }
 
-    // Method to get a CollegeClass object by its name from all ArrayLists
+    /**
+     * Method to get a college class by name from the class lists
+     * @param className to find in the lists
+     * @return CollegeClass associated object
+     */
     public CollegeClass getCollegeClassByName(String className) {
         List<List<CollegeClass>> allDayClasses = new ArrayList<>();
         allDayClasses.add(mondayClasses);
@@ -226,18 +261,13 @@ public class ScheduleManager {
         allDayClasses.add(thursdayClasses);
         allDayClasses.add(fridayClasses);
 
-        // Iterate through each ArrayList of CollegeClass objects
         for (List<CollegeClass> dayClasses : allDayClasses) {
-            // Iterate through the list of CollegeClass objects for the current day
             for (CollegeClass collegeClass : dayClasses) {
-                // Compare the names ignoring case
                 if (collegeClass.getClassTitle().equalsIgnoreCase(className)) {
-                    // Return the CollegeClass object if the names match
                     return collegeClass;
                 }
             }
         }
-        // Return null if no matching CollegeClass is found
         return null;
     }
 }

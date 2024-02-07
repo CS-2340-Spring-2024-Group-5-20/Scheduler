@@ -2,8 +2,6 @@ package com.example.front_end_current;
 
 // Android
 import android.os.Bundle;
-import android.util.Log;
-import android.util.MonthDisplayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +95,10 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Function to sort the task list in desired order when the filter button is clicked,
+     * based on the status of the sorting spinner.
+     */
     private void sortTasks() {
         String selectedOption = sortingSpinner.getSelectedItem().toString();
 

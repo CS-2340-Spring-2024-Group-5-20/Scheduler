@@ -35,8 +35,18 @@ public class Assignment extends Task {
         this.dueDate = String.format("%d, %d at %s", month, dayOfMonth, time);
         this.collegeClass = course;
     }
+
+    /**
+     * Getter for due date
+     * @return String dueDate
+     */
     public String getDueDate() {
         return dueDate;
     }
+
+    /**
+     * Getter for college class
+     * @return CollegeClass collegeClass
+     */
     public CollegeClass getCollegeClass() {return collegeClass;}
 }
