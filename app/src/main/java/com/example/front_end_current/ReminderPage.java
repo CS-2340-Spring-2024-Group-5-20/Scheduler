@@ -19,11 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 // Models
 import com.example.Models.Assignment;
+import com.example.Models.CollegeClass;
 import com.example.Models.Exam;
 import com.example.Models.Task;
 
 // Java
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -113,6 +116,49 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
             }
         }
 
+        ArrayList<Task> unsortedTasks = new ArrayList<Task>(tasks);
+        List<Task> sortedByCourses = new ArrayList<Task>();
+        List<CollegeClass> courses = Database.DATABASE.getAllClasses();
+        for (int i = 0; i < courses.size(); i++) {
+            CollegeClass currentClass = courses.get(i);
+            for (int j = 0; j < unsortedTasks.size(); j++) {
+                Task currentTask = tasks.get(j);
+                if (currentTask instanceof Exam)
+                {
+                    currentTask = (Exam) currentTask;
+                    if (currentTask.getClass().equals(currentClass)) {
+                        sortedByCourses.add(unsortedTasks.remove(j));
+                    }
+                } else if (currentTask instanceof Assignment)
+                {
+                    currentTask = (Assignment) currentTask;
+                    if (currentTask.getClass().equals(currentClass)) {
+                        sortedByCourses.add(unsortedTasks.remove(j));
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+        sortedByCourses.addAll(unsortedTasks);
+
+        List<Task> sortedByDueDate = new ArrayList<Task>(tasks);
+        Comparator<Task> comparator = new Comparator<Task>() {
+            @Override
+            public int compare(Task task1, Task task2) {
+                // Compare by month first
+                int monthComparison = Integer.compare(task1.getMonth(), task2.getMonth());
+                if (monthComparison != 0) {
+                    return monthComparison;
+                }
+                // If months are equal, compare by day
+                return Integer.compare(task1.getDayOfMonth(), task2.getDayOfMonth());
+            }
+        };
+
+        Collections.sort(sortedByDueDate, comparator);
+
+
         switch (selectedOption) {
             case "By Exam":
                 tasks = exams;
@@ -128,6 +174,12 @@ public class ReminderPage extends Fragment implements TaskAdapter.FragmentChange
                 tasks.addAll(exams);
                 tasks.addAll(assignments);
                 tasks.addAll(new_tasks);
+                break;
+            case "By Course":
+                tasks = sortedByCourses;
+                break;
+            case "By Due Date":
+                tasks = sortedByDueDate;
                 break;
         }
 
