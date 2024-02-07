@@ -77,7 +77,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Launch EditClassFragment with the selected CollegeClass object
                 launchTaskEditFragment(task);
             }
         });
@@ -88,11 +87,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
      * @param task to be edited by the edit task fragment
      */
     private void launchTaskEditFragment(Task task) {
-        // Create a new instance of EditTaskFragment
         EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(task);
         Log.d("Log", "Clicked on editable element");
 
-        // Pass the fragment to the activity
         if (fragmentChangeListener != null) {
             fragmentChangeListener.changeFragment(editTaskFragment);
             Log.d("Log", "Clicked on editable element 2, task " + task.getDescription());
@@ -104,6 +101,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
+    /**
+     * Function to update the task list if the sort style is changed.
+     * @param updatedTasks new list of tasks in new order.
+     */
     public void updateTasks(List<Task> updatedTasks) {
         tasks.clear();
         tasks.addAll(updatedTasks);

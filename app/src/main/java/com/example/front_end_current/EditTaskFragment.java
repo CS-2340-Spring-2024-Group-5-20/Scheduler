@@ -1,7 +1,7 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,24 +12,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-
 import androidx.annotation.NonNull;
 
+// Models
 import com.example.Models.Assignment;
 import com.example.Models.CollegeClass;
 import com.example.Models.Exam;
 import com.example.Models.Task;
-import com.example.front_end_current.Database;
 
+// Java
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class for fragment that is rendered when each individual task block is clicked.
+ */
 public class EditTaskFragment extends Fragment {
 
     private Spinner taskTypeSpinner;
@@ -79,6 +80,11 @@ public class EditTaskFragment extends Fragment {
         return view;
     }
 
+    /**
+     * New instance function to generate a new fragment based on the context of a task
+     * @param task to draw context from
+     * @return new edit fragment
+     */
     public static EditTaskFragment newInstance(Task task) {
         EditTaskFragment fragment = new EditTaskFragment();
         Bundle args = new Bundle();
@@ -87,6 +93,9 @@ public class EditTaskFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Helper function to load the task type spinner
+     */
     private void setupTaskTypeSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.task_types, android.R.layout.simple_spinner_item);
@@ -98,29 +107,32 @@ public class EditTaskFragment extends Fragment {
                 String selectedType = parent.getItemAtPosition(position).toString();
                 showHideFields(selectedType);
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
+    /**
+     * Helper function to hide various fields depending on the type of task selected
+     * @param selectedType type of task selected (exam, assignment, task)
+     */
     private void showHideFields(String selectedType) {
-        // Get references to the fields you want to show/hide
         EditText endTimeEditText = requireView().findViewById(R.id.endTimeEditText);
 
-        // Hide all fields initially
         endTimeEditText.setVisibility(View.GONE);
         collegeClassSpinner.setVisibility(View.GONE);
 
-        // Show the relevant field based on the selected type
         if ("Exam".equals(selectedType) || "Assignment".equals(selectedType)) {
             endTimeEditText.setVisibility(View.VISIBLE);
             collegeClassSpinner.setVisibility(View.VISIBLE);
         }
     }
 
+    /**
+     * Helper function to populate the spinner that allows you to link assignments/exams
+     * to classes
+     * @param collegeClassSpinner to populate
+     */
     private void setupCollegeClassSpinner(Spinner collegeClassSpinner) {
         List<CollegeClass> collegeClasses = Database.DATABASE.getAllClasses();
         List<String> classTitles = new ArrayList<>();
@@ -139,13 +151,17 @@ public class EditTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Function to prefill data in the editTexts and Spinners based on the context of a task to
+     * be edited.
+     * @param task context to populate fragment with
+     */
     private void preFillTaskDetails(Task task) {
         taskDescriptionEditText.setText(task.getDescription());
         startTimeEditText.setText(task.getTime());
         dayEditText.setText(String.valueOf(task.getDayOfMonth()));
         monthEditText.setText(String.valueOf(task.getMonth()));
 
-        // Pre-select the task type in the spinner
         String taskType = task instanceof Assignment ? "Assignment" :
                 task instanceof Exam ? "Exam" : "Task";
         int position = ((ArrayAdapter) taskTypeSpinner.getAdapter()).getPosition(taskType);
@@ -160,7 +176,6 @@ public class EditTaskFragment extends Fragment {
                 associatedClass = ((Assignment) task).getCollegeClass();
             }
 
-            // Pre-select the associated college class in the spinner
             if (associatedClass != null) {
                 String collegeClassName = associatedClass.getClassTitle();
                 int classPosition = ((ArrayAdapter) collegeClassSpinner.getAdapter()).getPosition(collegeClassName);
@@ -169,13 +184,16 @@ public class EditTaskFragment extends Fragment {
         }
     }
 
+    /**
+     * Function to save task to the database
+     * @param id of existing task to update in the database
+     */
     private void saveTask(UUID id) {
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
         String startTime = startTimeEditText.getText().toString().trim();
         int day = Integer.parseInt(dayEditText.getText().toString().trim());
         int month = Integer.parseInt(monthEditText.getText().toString().trim());
 
-        // Determine the task type based on the spinner selection
         String taskType = taskTypeSpinner.getSelectedItem().toString();
 
         if (taskDescription.isEmpty() || startTime.isEmpty() || taskType.isEmpty() || taskType.isEmpty() ||
@@ -205,6 +223,10 @@ public class EditTaskFragment extends Fragment {
         fragmentManager.popBackStack();
     }
 
+    /**
+     * Helper function to delete a task based on id
+     * @param id of task to delete
+     */
     private void deleteTask(UUID id) {
         Database.DATABASE.deleteTaskByUUID(id);
         Toast.makeText(requireContext(), "Task deleted successfully", Toast.LENGTH_SHORT).show();

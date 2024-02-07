@@ -33,6 +33,7 @@ public class MeetingTime {
     public String getStartTime() {
         return startTime;
     }
+
     /**
      * Getter for end time of class on the specified day.
      * @return end time of the class on the specified day.

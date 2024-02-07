@@ -36,8 +36,18 @@ public class Exam extends Task {
         this.endTime = endTime;
         this.collegeClass = collegeClass;
     }
+
+    /**
+     * Getter for end time
+     * @return String end time
+     */
     public String getEndTime() {
         return endTime;
     }
+
+    /**
+     * Getter for college class
+     * @return CollegeClass college class
+     */
     public CollegeClass getCollegeClass() {return collegeClass;}
 }

@@ -1,5 +1,6 @@
 package com.example.front_end_current;
 
+// Android
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,20 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+// Models
 import com.example.Models.CollegeClass;
 import com.example.Models.Day;
 import com.example.Models.MeetingTime;
-import com.example.Models.ScheduleManager;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
+// Java
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * Fragment to represent the edit page when class object is clicked.
+ */
 public class EditClassFragment extends Fragment {
     private TextInputEditText classNameEditText;
     private TextInputEditText professorNameEditText;
@@ -36,6 +40,11 @@ public class EditClassFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Helper function to generate new edit class fragment based on the context of a class
+     * @param collegeClass context to render fragment from
+     * @return new edit class fragment
+     */
     public static EditClassFragment newInstance(CollegeClass collegeClass) {
         EditClassFragment fragment = new EditClassFragment();
         Bundle args = new Bundle();
@@ -60,10 +69,8 @@ public class EditClassFragment extends Fragment {
         saveClassButton = view.findViewById(R.id.saveClassButton);
         deleteClassButton = view.findViewById(R.id.deleteClassButton);
 
-        // Get the CollegeClass object from arguments
         CollegeClass collegeClass = (CollegeClass) getArguments().getSerializable("collegeClass");
 
-        // Pre-fill EditText fields with the details of the CollegeClass object
         classNameEditText.setText(collegeClass.getClassTitle());
         professorNameEditText.setText(collegeClass.getProfessor());
         sectionEditText.setText(collegeClass.getClassSection());
@@ -73,7 +80,6 @@ public class EditClassFragment extends Fragment {
         startEditText.setText(collegeClass.getMeetingTime().getStartTime());
         endEditText.setText(collegeClass.getMeetingTime().getEndTime());
 
-        // Set OnClickListener for the Save button
         saveClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +98,7 @@ public class EditClassFragment extends Fragment {
     }
 
     /**
-     * Function to load the content from the fragment and save to the database;
+     * Function to load the content from the fragment and save to the database
      */
     private void saveClass(UUID id) {
 
@@ -124,16 +130,18 @@ public class EditClassFragment extends Fragment {
 
         Toast.makeText(requireContext(), "Event saved successfully", Toast.LENGTH_SHORT).show();
 
-        // navigate back to schedule fragment
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }
 
+    /**
+     * Helper function to delete class from the database by ID
+     * @param id of class to be deleted
+     */
     private void deleteClass(UUID id) {
         Database.DATABASE.deleteClassByUUID(id);
         Toast.makeText(requireContext(), "Class deleted successfully", Toast.LENGTH_SHORT).show();
 
-        // Navigate back to previous fragment
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }

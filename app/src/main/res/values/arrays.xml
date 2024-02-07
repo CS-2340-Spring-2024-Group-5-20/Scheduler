@@ -6,7 +6,6 @@
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
-        <item>Saturday</item>
     </string-array>
     <string-array name="task_types">
         <item>Task</item>
@@ -21,6 +20,8 @@
         <item>By Task</item>
         <item>By Exam</item>
         <item>By Assignment</item>
+        <item>By Course</item>
+        <item>By Due Date</item>
         <item>By All</item>
     </string-array>
 </resources>
